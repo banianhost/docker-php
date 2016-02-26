@@ -8,7 +8,7 @@ RUN apt update
 RUN apt install -y git nginx wget \
 	sudo dbus \
 	php5-fpm php5-curl php5-mysql php5-mcrypt php5-json php5-cli php5-curl php5-dev \
-	openssl libssl-dev libcurl4-openssl-dev libsasl2-dev libpcre3-dev pkg-config
+	openssl libssl-dev libcurl4-openssl-dev libsasl2-dev libpcre3-dev pkg-config curl
 
 # Installing the MongoDB PHP Driver with PECL
 RUN pecl install mongodb
@@ -36,6 +36,16 @@ COPY conf/www.conf /etc/php5/fpm/pool.d/www.conf
 # Nginx
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 COPY conf/nginx-default /etc/nginx/sites-enabled/default
+
+# Home dir
+RUN mkdir -p /var/www && chown -R www-data:www-data /var/www
+
+# Let's Encrypt
+RUN wget -nv -O - https://github.com/lukas2511/letsencrypt.sh/archive/master.tar.gz | tar -xvzf - && \
+	mv letsencrypt.sh-master/ /opt/letsencrypt && \
+	cp /opt/letsencrypt/config.sh.example /opt/letsencrypt/config.sh && \
+	touch /opt/letsencrypt/domains.txt && \
+	mkdir -p /opt/letsencrypt/.acme-challenges
 
 # Lasser
 COPY laaser /usr/share/laaser

@@ -24,7 +24,7 @@ Every container has a WebUI Injected to,called laaser.which allows you easily ma
 - **SSH-Keys** are auto-generated for git access
 - Very **Light**, no database running inside container
 - Easy Container Managment Through **Laaser Webui**
- 
+- Valid SSL Using **Let's Encrypt**
 
 # Quick Start
 Im Working on an Easier and Automated Soloution.

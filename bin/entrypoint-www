@@ -34,5 +34,10 @@ ln -fs /var/www//laravel/storage/logs/laravel.log /var/www/logs
 mkdir -p /var/www/laravel/public && \
 ln -fs /usr/share/laaser /var/www/laravel/public
 
+# Let's Encrypt
+if [ ! -d /var/www/letsencrypt ] ; then
+ cp -rv /opt/letsencrypt /var/www/letsencrypt
+fi
+
 # Update repo
 update

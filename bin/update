@@ -5,8 +5,12 @@ cd /var/www/laravel
 git pull
 composer install --prefer-source
 
-if [ ! -e .lass_init ] ; then
+# Init
+if [ ! -e .laas_init ] ; then
   cp .env.example .env
   php artisan key:generate
-  touch .lass_init
+  touch .laas_init
 fi
+
+# Let's Encrypt
+/var/www/letsencrypt/letsencrypt.sh --cron
