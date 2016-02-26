@@ -1,3 +1,4 @@
+<link href='/lasser/css/console.css' rel="stylesheet" />
 <pre>
 <?php 
 echo "Starting Update\n";

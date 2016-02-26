@@ -1,0 +1,6 @@
+body, .console {
+    overflow-wrap: break-word; */
+    margin: 30px;
+    background-color: black;
+    color: white;
+}
