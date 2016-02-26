@@ -1,3 +1,5 @@
+[![Docker Repository on Quay](https://quay.io/repository/pooya/laas/status "Docker Repository on Quay")](https://quay.io/repository/pooya/laas)
+
 # Laas ( Laravel As A Service )
 Painless and Automated Laravel Docker instances Hosting and Deployment.
 
