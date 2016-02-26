@@ -4,8 +4,8 @@ FROM debian:jessie
 MAINTAINER Pooya Parsa <pooya@pi0.ir>
 
 # Install packages
-RUN apt update
-RUN apt install -y git nginx wget \
+RUN apt-get update
+RUN apt-get install -y git nginx wget \
 	sudo dbus \
 	php5-fpm php5-curl php5-mysql php5-mcrypt php5-json php5-cli php5-curl php5-dev \
 	openssl libssl-dev libcurl4-openssl-dev libsasl2-dev libpcre3-dev pkg-config curl
