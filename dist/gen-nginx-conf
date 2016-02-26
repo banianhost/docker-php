@@ -5,9 +5,6 @@ DIR=`dirname $SCRIPT`
 DATADIR=`dirname $DIR`
 
 OPTIND=1
-COMMONNAME=""
-DOMAINS=""
-SOCKETPATH=""
 SSL_CONF=""
 
 # Parse Arguments
@@ -23,7 +20,7 @@ while getopts "?h:su:" opt; do
 			DATADIR=$OPTARG
 			;;
 		*)
-			echo "Usage: $0 -h [common_name] -d [data_dir] {domains_list}"
+			echo "Usage: $0 -h [common_name] -d [data_dir] {domains_list} -s ssl?"
 			exit
 			;;
 	esac
@@ -35,16 +32,18 @@ shift "$((OPTIND-1))"
 
 DOMAINS=$@
 SOCKETPATH=$DATADIR/nginx.sock
+CERTPATH=$DATADIR/letsencrypt/certs/$COMMONNAME/fullchain.pem
+KEYPATH=$DATADIR/letsencrypt/certs/$COMMONNAME/privkey.pem
 
 # Add domains to ssl
-tee "$COMMONNAME $DOMAINS" $DATADIR/letsencrypt/domains.txt
-
+echo "$COMMONNAME $DOMAINS" | sudo tee $DATADIR/letsencrypt/domains.txt
 
 # Generate Nginx Configuration File
-render_template() {
+render() {
   eval "echo \"$(cat $1|sed 's/\$/#@#/g;s/\%/\$/g')\""|sed 's/#@#/\$/'
 }
-render_template $DIR/nginx.conf | sudo tee /etc/nginx/sites-enabled/$COMMONNAME.conf
+render $DIR/nginx.conf > /tmp/a
+render /tmp/a | sudo tee /etc/nginx/sites-enabled/$COMMONNAME.conf
 
 echo "Reload Nginx.."
 sudo nginx -s reload
