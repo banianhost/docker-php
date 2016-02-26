@@ -1,5 +1,6 @@
 #!/bin/bash
-cd ~www-data/laravel
+
+cd /var/www/laravel
 git pull
 
 if [ ! -e .env ] ; then
@@ -7,9 +8,4 @@ if [ ! -e .env ] ; then
   php artisan key:generate
 fi
 
-if [ -f .doravel ];then 
- source .doravel
- do_update
-else
- composer install
-fi
+composer install

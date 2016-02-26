@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Generate ssh key
+if [ ! -f ~/.ssh/id_rsa.pub ] ; then
+ echo -e "\n\n\n" | ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa -q
+ echo ----------------------------------------
+ echo Your SSH Key is Ready
+ echo ----------------------------------------
+ cat ~/.ssh/id_rsa.pub
+ echo ----------------------------------------
+fi
+
+# Check if data is not initialized yet
+if [ ! -d /var/www/laravel ] ; then
+
+	# Probe ssh-keys 
+	ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+	ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
+	
+	# Clone project
+	if [ $# -ne 1 ]; then
+		echo "illegal number of parameters, please specify git repo url"
+		exit
+	fi
+	git clone $1 /var/www/laravel || exit
+
+fi	
+
+touch /var/www//laravel/storage/logs/laravel.log 
+ln -fs /var/www//laravel/storage/logs/laravel.log /var/www/logs
+ln -fs /webhook.php /var/www/laravel/public
+
+webhook

@@ -42,5 +42,6 @@ COPY webhook/webhook /usr/local/bin/
 COPY webhook/webhook.php /
 
 #Entrypoint Script
-COPY entrypoint /usr/local/bin/entrypoint
+COPY entrypoint /usr/local/bin/
+COPY entrypoint-www /usr/local/bin/
 ENTRYPOINT ["/usr/local/bin/entrypoint"]

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Init home dir
 mkdir -pv /var/www/logs
 chown -R www-data:www-data /var/www
 
@@ -13,32 +14,9 @@ echo Starting Nginx
 rm /var/www/nginx.sock 
 nginx
 
-sudo -u www-data /bin/bash - << eof
+sudo -u www-data /bin/bash entrypoint-www
 
-if [ ! -f ~/.ssh/id_rsa.pub ] ; then
- echo -e "\n\n\n" | ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa -q
- echo "----------------------------------------"
- cat ~/.ssh/id_rsa.pub
- echo "----------------------------------------"
-fi
-
-if [ ! -d /var/www/laravel ] ; then
- if [ $# -ne 1 ]; then
-	echo "illegal number of parameters, please specify git repo url"
-	exit
- fi
- ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
- ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
- git clone $1 /var/www/laravel
-fi	
-
-ln -fs /var/www//laravel/storage/logs/laravel.log /var/www/logs
-ln -fs /webhook.php /var/www/laravel/public
-
-webhook
-
-eof
-
+echo "Let's go"
 tail -f /var/www/logs/*
 
 echo Stopping Container
