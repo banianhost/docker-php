@@ -27,9 +27,10 @@ if [ ! -d /var/www/laravel ] ; then
  git clone $1 /var/www/laravel
 fi	
 
+webhook
+
 eof
 
-update
 
 echo "Nginx Started"
 nginx

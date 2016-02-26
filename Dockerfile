@@ -37,9 +37,9 @@ COPY www.conf /etc/php5/fpm/pool.d/www.conf
 # Git
 RUN mkdir -p /var/www && chown www-data:www-data -R /var/www && sudo -u www-data git config --global credential.helper store
 
-# Artisan
-COPY artisan /usr/local/bin/artisan
-COPY update /usr/local/bin/update
+# Webhook
+COPY webhook /usr/local/bin/
+COPY webhook.php /
 
 #Entrypoint Script
 COPY entrypoint /usr/local/bin/entrypoint

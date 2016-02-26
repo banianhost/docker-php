@@ -11,6 +11,10 @@ server {
 
     index index.php;
 
+	location /webhook {
+		try_files /webhook.php;
+    }
+
     location / {
         # URLs to attempt, including pretty ones.
         try_files $uri $uri/ /index.php?$query_string;
