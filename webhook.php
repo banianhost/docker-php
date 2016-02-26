@@ -1,1 +1,1 @@
-<?php echo exec('/usr/local/bin/webhook.php');
+<?php echo exec('/usr/local/bin/webhook');

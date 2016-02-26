@@ -3,9 +3,9 @@
 mkdir -pv /var/www/logs
 chown -R www-data:www-data /var/www
 
+echo Starting DBus
 /etc/init.d/dbus start
-
-echo "Starting php5-fpm.."
+echo Starting PHP-FPM
 /etc/init.d/php5-fpm start
 
 sudo -u www-data /bin/bash - << eof
@@ -27,11 +27,13 @@ if [ ! -d /var/www/laravel ] ; then
  git clone $1 /var/www/laravel
 fi	
 
+ln -fs /var/www//laravel/storage/logs/laravel.log /var/www/logs
+ln -fs /webhook.php /var/www/laravel/public
+
 webhook
 
 eof
 
-
-echo "Nginx Started"
+echo Nginx Started
 nginx
-echo "Nginx Stopped"
+echo Stopping Nginx
