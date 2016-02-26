@@ -1,43 +1,50 @@
 #!/bin/bash
+
 SCRIPT=`realpath $0`
 DIR=`dirname $SCRIPT`
+DATADIR=`dirname $DIR`
 
-# Parse Arguments
 OPTIND=1
-COMMON_NAME=""
+COMMONNAME=""
 DOMAINS=""
 SOCKETPATH=""
 SSL_CONF=""
 
+# Parse Arguments
 while getopts "?h:su:" opt; do
 	case "$opt" in
 		h)
-			COMMON_NAME=$OPTARG
+			COMMONNAME=$OPTARG
 			;;
 		s)
-			SSL_CONF="`cat ssl.conf`"
+			SSL_CONF="`cat $DIR/ssl.conf`"
 			;;
-		u)
-			SOCKETPATH=$OPTARG
+		d)
+			DATADIR=$OPTARG
 			;;
 		*)
-			echo "Usage: $0` -h [common name] -u [socket path] {domains list}"
+			echo "Usage: $0 -h [common_name] -d [data_dir] {domains_list}"
 			exit
 			;;
 	esac
 done  	
 
+[[ -z $COMMONNAME ]] && echo "-h [common_name] is missing" && exit
+
 shift "$((OPTIND-1))"
-DOMAINS=`printf $@`
+
+DOMAINS=$@
+SOCKETPATH=$DATADIR/nginx.sock
+
+# Add domains to ssl
+tee "$COMMONNAME $DOMAINS" $DATADIR/letsencrypt/domains.txt
 
 
 # Generate Nginx Configuration File
+render_template() {
+  eval "echo \"$(cat $1|sed 's/\$/#@#/g;s/\%/\$/g')\""|sed 's/#@#/\$/'
+}
+render_template $DIR/nginx.conf | sudo tee /etc/nginx/sites-enabled/$COMMONNAME.conf
 
-# render a template configuration file
-# expand variables + preserve formatting
-# http://pempek.net/articles/2013/07/08/bash-sh-as-template-engine/
-render_template() { eval "echo \"$(cat $1)\"" }
-
-sudo render_template nginx.conf /etc/nginx/sites-enabled/$COMMON_NAME.conf
-
+echo "Reload Nginx.."
 sudo nginx -s reload

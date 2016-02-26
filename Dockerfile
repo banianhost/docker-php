@@ -47,6 +47,9 @@ RUN wget -nv -O - https://github.com/lukas2511/letsencrypt.sh/archive/master.tar
 	touch /opt/letsencrypt/domains.txt && \
 	mkdir -p /opt/letsencrypt/.acme-challenges
 
+# Dist
+COPY dist /opt/dist
+
 # Lasser
 COPY laaser /usr/share/laaser
 
