@@ -40,11 +40,10 @@ echo "$COMMONNAME $DOMAINS" | sudo tee $DATADIR/letsencrypt/domains.txt
 
 # Generate Nginx Configuration File
 render() {
-  eval "echo \"$(cat $1|sed 's/\$/#@#/g;s/\%/\$/g')\""|sed 's/#@#/\$/'
+  eval "echo \"$(cat $1|sed 's/\$/@#@/g;s/\%/\$/g')\"" | sed 's/@#@/\$/g'
 }
 render $DIR/nginx.conf > $DIR/nginx.tmp
 render $DIR/nginx.tmp | sudo tee /etc/nginx/sites-enabled/$COMMONNAME.conf
-rm $DIR/nginx.tmp
 
 echo "Reload Nginx.."
 sudo nginx -s reload

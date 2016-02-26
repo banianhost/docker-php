@@ -31,6 +31,7 @@ server {
     # PHP FPM configuration.
     location ~* \.php$ {
 		include snippets/fastcgi-php.conf;
+		fastcgi_param   HTTPS $fe_https;
 		fastcgi_pass unix:/var/run/php5-fpm.sock;
     }
 
