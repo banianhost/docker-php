@@ -1,0 +1,2 @@
+#!/bin/bash
+sudo -u www-data cd /var/www/laravel && php artisan $@

@@ -1,0 +1,36 @@
+#!/bin/bash
+
+mkdir -pv /var/www/logs
+chown -R www-data:www-data /var/www
+
+/etc/init.d/dbus start
+
+echo "Starting php5-fpm.."
+/etc/init.d/php5-fpm start
+
+sudo -u www-data /bin/bash - << eof
+
+if [ ! -f ~/.ssh/id_rsa.pub ] ; then
+ echo -e "\n\n\n" | ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa -q
+ echo "----------------------------------------"
+ cat ~/.ssh/id_rsa.pub
+ echo "----------------------------------------"
+fi
+
+if [ ! -d /var/www/laravel ] ; then
+ if [ $# -ne 1 ]; then
+	echo "illegal number of parameters, please specify git repo url"
+	exit
+ fi
+ ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+ ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
+ git clone $1 /var/www/laravel
+fi	
+
+eof
+
+update
+
+echo "Nginx Started"
+nginx
+echo "Nginx Stopped"

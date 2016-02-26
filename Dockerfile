@@ -1,22 +1,46 @@
 # vim:set ft=dockerfile:
 
-FROM ubuntu:latest
+FROM debian:jessie
 MAINTAINER Pooya Parsa <pooya@pi0.ir>
 
-# Add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
-RUN groupadd -r www-data && useradd -r -g www-data www-data
-
 # Install packages
-RUN apt-get update
-RUN apt-get install git nginx wget \
-	php5-fpm php5-curl php5-mysql php5-mcrypt php5-json php5-cli php5-curl php5-dev
+RUN apt update
+RUN apt install -y git nginx wget \
+	php5-fpm php5-curl php5-mysql php5-mcrypt php5-json php5-cli php5-curl php5-dev \
+	openssl libssl-dev libcurl4-openssl-dev libsasl2-dev libpcre3-dev pkg-config
 
-# Install composer
-RUN wget https://getcomposer.org/composer.phar -o /usr/local/bin/composer && \
-	chmod +x /usr/local/bin/composer
+# Installing the MongoDB PHP Driver with PECL
+RUN pecl install mongodb
+
+RUN echo "extension = mongodb.so" > /etc/php5/mods-available/mongo.ini && \
+	ln -fvs /etc/php5/mods-available/mongo.ini /etc/php5/fpm/conf.d/ && \
+	ln -fvs /etc/php5/mods-available/mongo.ini /etc/php5/cli/conf.d/
+
+# Packages
+RUN apt install sudo dbus -y
 
 # Cleanup
-RUN rm -rf /var/lib/apt/lists/*
+RUN rm -rf /var/lib/apt/lists/* /var/cache/apt/packages/* && apt-get remove -y php5-dev libssl-dev libcurl4-openssl-dev libsasl2-dev libpcre3-dev pkg-config && apt-get autoremove -y
+
+# Install composer
+RUN wget https://getcomposer.org/composer.phar -O /usr/local/bin/composer && \
+	chmod +x /usr/local/bin/composer
+
+# Nginx
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx-default /etc/nginx/sites-enabled/default
+
+# Php
+COPY php.ini /etc/php5/fpm/php.ini
+COPY www.conf /etc/php5/fpm/pool.d/www.conf 
+
+# Git
+RUN mkdir -p /var/www && chown www-data:www-data -R /var/www && sudo -u www-data git config --global credential.helper store
+
+# Artisan
+COPY artisan /usr/local/bin/artisan
+COPY update /usr/local/bin/update
 
 #Entrypoint Script
-ENTRYPOINT ["/entrypoint.sh"]
+COPY entrypoint /usr/local/bin/entrypoint
+ENTRYPOINT ["/usr/local/bin/entrypoint"]

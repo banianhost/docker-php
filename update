@@ -1,0 +1,18 @@
+#!/bin/bash
+sudo -u www-data /bin/bash - << eof
+
+cd ~/laravel
+git pull
+
+if [ ! -e .env ] ; then
+  cp .env.example .env
+  php artisan key:generate
+fi
+
+if [ -f .doravel ];then 
+ source .doravel
+ do_update
+else
+ composer install
+fi
+eof

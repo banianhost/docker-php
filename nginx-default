@@ -1,0 +1,39 @@
+server {
+    # Port that the web server will listen on.
+    listen 80 default;
+	listen unix:/var/www/nginx.sock;
+
+    # Host that will serve this project.
+    server_name _;
+
+    # The location of our projects public directory.
+    root            /var/www/laravel/public;
+
+    index index.php;
+
+    location / {
+        # URLs to attempt, including pretty ones.
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # Remove trailing slash to please routing system.
+    if (!-d $request_filename) {
+        rewrite     ^/(.+)/$ /$1 permanent;
+    }
+
+    # PHP FPM configuration.
+    location ~* \.php$ {
+		include snippets/fastcgi-php.conf;
+		fastcgi_pass unix:/var/run/php5-fpm.sock;
+    }
+
+    # We don't need .ht files with nginx.
+    location ~ /\.ht {
+            deny all;
+    }
+
+    # Set header expirations on per-project basis
+    # location ~* \.(?:ico|css|js|jpe?g|JPG|png|svg|woff)$ {
+	#	expires 365d;
+    # }
+}
