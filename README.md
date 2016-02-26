@@ -26,12 +26,11 @@ Im Working on an Easier and Automated Soloution.
 
 To run a test Instance
 ```bash
-docker run --rm -itv /tmp/lass_test:/var/www pooya/laas http://github.com/bestmomo/laravel5-example
-# OR
-# docker run -it pooya/laas <YourLaravelProjectGitURL>
+docker run --rm -p 2739:80 -itv /tmp/lass_test:/var/www pooya/laas http://github.com/bestmomo/laravel5-exampe
 ```
-  
-Then, to run a instance that starts at host boot time:
+Your container is Ready on `http://host_ip:2739`
+    
+To run a instance that starts at host boot time:
 ```bash
 docker run --name <Name> --restart=always -itdv <DataStorage>:/var/www pooya/laas <YourLaravelProjectGitURL>
 ```
