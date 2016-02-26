@@ -42,8 +42,9 @@ echo "$COMMONNAME $DOMAINS" | sudo tee $DATADIR/letsencrypt/domains.txt
 render() {
   eval "echo \"$(cat $1|sed 's/\$/#@#/g;s/\%/\$/g')\""|sed 's/#@#/\$/'
 }
-render $DIR/nginx.conf > /tmp/a
-render /tmp/a | sudo tee /etc/nginx/sites-enabled/$COMMONNAME.conf
+render $DIR/nginx.conf > $DIR/nginx.tmp
+render $DIR/nginx.tmp | sudo tee /etc/nginx/sites-enabled/$COMMONNAME.conf
+rm $DIR/nginx.tmp
 
 echo "Reload Nginx.."
 sudo nginx -s reload
