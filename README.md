@@ -26,7 +26,9 @@ Im Working on an Easier and Automated Soloution.
 
 To run a test Instance
 ```bash
-docker run -it pooya/laas <YourLaravelProjectGitURL>
+docker run --rm -itv /tmp/lass_test:/var/www pooya/laas http://github.com/bestmomo/laravel5-example
+# OR
+# docker run -it pooya/laas <YourLaravelProjectGitURL>
 ```
   
 Then, to run a instance that starts at host boot time:
