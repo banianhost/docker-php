@@ -37,11 +37,11 @@ COPY conf/www.conf /etc/php5/fpm/pool.d/www.conf
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 COPY conf/nginx-default /etc/nginx/sites-enabled/default
 
-# Webhook
-COPY webhook/webhook /usr/local/bin/
-COPY webhook/webhook.php /
+# Lasser
+COPY laaser /usr/share/laaser
+
+#Bin
+COPY bin /usr/local/bin
 
 #Entrypoint Script
-COPY entrypoint /usr/local/bin/
-COPY entrypoint-www /usr/local/bin/
 ENTRYPOINT ["/usr/local/bin/entrypoint"]

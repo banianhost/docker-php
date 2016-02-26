@@ -26,8 +26,13 @@ if [ ! -d /var/www/laravel ] ; then
 
 fi	
 
+# Logs
 touch /var/www//laravel/storage/logs/laravel.log 
 ln -fs /var/www//laravel/storage/logs/laravel.log /var/www/logs
-ln -fs /webhook.php /var/www/laravel/public
 
-webhook
+# Laaser
+mkdir -p /var/www/laravel/public && \
+ln -fs /usr/share/laaser /var/www/laravel/public
+
+# Update repo
+update

@@ -10,10 +10,10 @@ server {
     root            /var/www/laravel/public;
 
     index index.php;
-
-    location / {
-        # URLs to attempt, including pretty ones.
-        try_files $uri $uri/ /index.php?$query_string;
+    try_files $uri $uri/ /index.php?$query_string;
+ 
+    location /laaser {
+		try_files $uri $uri/ $uri.php?$query_string;
     }
 
     # Remove trailing slash to please routing system.

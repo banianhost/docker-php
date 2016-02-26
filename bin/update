@@ -1,11 +1,12 @@
 #!/bin/bash
 
 cd /var/www/laravel
-git pull
 
-if [ ! -e .env ] ; then
+git pull
+composer install --prefer-source
+
+if [ ! -e .lass_init ] ; then
   cp .env.example .env
   php artisan key:generate
+  touch .lass_init
 fi
-
-composer install
