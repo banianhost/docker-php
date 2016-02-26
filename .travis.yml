@@ -1,0 +1,10 @@
+sudo: required
+
+services:
+  - docker
+
+script:
+  - ls -lah .  
+  - ./build
+  - docker run -it pooya/laas git@github.com:laravel/laravel.git
+  
