@@ -9,12 +9,19 @@ server {
     # The location of our projects public directory.
     root            /var/www/laravel/public;
 
+	#
     index index.php;
     try_files $uri $uri/ /index.php?$query_string;
- 
+
+	# Laaser user friendly urls 
     location /laaser {
 		try_files $uri $uri/ $uri.php?$query_string;
     }
+
+	# Let's Encrypt
+	location /.well-known/acme-challenge {
+		alias /var/www/letsencrypt/.acme-challenges;
+	}
 
     # Remove trailing slash to please routing system.
     if (!-d $request_filename) {
