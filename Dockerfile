@@ -24,18 +24,18 @@ RUN rm -rf /var/lib/apt/lists/* /var/cache/apt/packages/* && apt-get remove -y p
 RUN wget https://getcomposer.org/composer.phar -O /usr/local/bin/composer && \
 	chmod +x /usr/local/bin/composer
 
-# Nginx
-COPY conf/nginx.conf /etc/nginx/nginx.conf
-COPY conf/nginx-default /etc/nginx/sites-enabled/default
+# Git
+RUN mkdir -p /var/www && \
+    chown www-data:www-data -R /var/www && \
+    sudo -u www-data git config --global credential.helper store
 
 # Php
 COPY conf/php.ini /etc/php5/fpm/php.ini
 COPY conf/www.conf /etc/php5/fpm/pool.d/www.conf 
 
-# Git
-RUN mkdir -p /var/www && \
-    chown www-data:www-data -R /var/www && \
-    sudo -u www-data git config --global credential.helper store
+# Nginx
+COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY conf/nginx-default /etc/nginx/sites-enabled/default
 
 # Webhook
 COPY webhook/webhook /usr/local/bin/
