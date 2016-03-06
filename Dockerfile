@@ -8,6 +8,7 @@ RUN apt-get update
 RUN apt-get install -y git nginx wget \
 	sudo dbus \
 	php5-fpm php5-curl php5-mysql php5-mcrypt php5-json php5-cli php5-curl php5-dev \
+	php5-gd php5-redis php5-json php5-imagick \
 	openssl libssl-dev libcurl4-openssl-dev libsasl2-dev libpcre3-dev pkg-config curl
 
 # Installing the MongoDB PHP Driver with PECL
