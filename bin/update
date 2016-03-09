@@ -14,7 +14,7 @@ git pull
 composer install --prefer-source
 
 # .laas_update file
-if [ -f .laas_update] ; then
+if [ -f .laas_update ] ; then
 	source ./laas_update
 fi
 
@@ -29,7 +29,7 @@ fi
 if [ -f .nginx.conf.extra ] ; then
 	NGINX_CONF_EXTRA="`cat .nginx.conf.extra`"
 fi
-render /etc/nginx/nginx-default > /etc/nginx/sites-enabled/default.conf
+render /etc/nginx/nginx-default > /etc/nginx/sites-enabled/default
 nginx -s reload
 
 # Init

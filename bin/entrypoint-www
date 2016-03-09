@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Start nginx 
+nginx
+
 # Generate ssh key
 if [ ! -f ~/.ssh/id_rsa.pub ] ; then
  echo -e "\n\n\n" | ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa -q
@@ -44,6 +47,11 @@ cp -r /opt/letsencrypt /var/www
 
 # Dist files
 cp -r /opt/dist /var/www
+
+# Remove lock file
+if [ -f /var/www/laravel/.laas.lock ] ; then
+	rm /var/www/laravel/.laas.lock
+fi
 
 # Update repo
 update

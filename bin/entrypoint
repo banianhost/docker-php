@@ -10,11 +10,17 @@ echo Starting DBus
 echo Starting PHP-FPM
 /etc/init.d/php5-fpm start
 
-sudo -u www-data /bin/bash entrypoint-www $@ || exit
-
 echo Starting Nginx
 rm /var/www/nginx.sock 
-nginx
+rm /run/nginx.pid
+chmod 777 /run/
+chown www-data:www-data /run/nginx.pid
+chown www-data:www-data /etc/nginx -R
+chown www-data:www-data /var/log/nginx/ -R
+chown www-data:www-data /var/lib/nginx/ -R
+setcap 'cap_net_bind_service=+ep' `which nginx`
+
+sudo -u www-data /bin/bash entrypoint-www $@ || exit
 
 echo "Let's go"
 tail -f /var/www/logs/*
