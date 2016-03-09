@@ -2,6 +2,13 @@
 
 cd /var/www/laravel
 
+## LOCK
+if [ -f .lass.lock ] ; then
+	echo "Lock file '.lass.lock' exists, it seems it is already updating ..."
+	exit 1
+fi
+touch .lass.lock
+
 git pull
 composer install --prefer-source
 
@@ -14,3 +21,6 @@ fi
 
 # Let's Encrypt
 /var/www/letsencrypt/letsencrypt.sh --cron
+
+## LOCK
+rm .lass.lock
