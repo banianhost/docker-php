@@ -3,11 +3,15 @@
 SCRIPT=`realpath $0`
 DIR=`dirname $SCRIPT`
 DATADIR=`dirname $DIR`
-
-OPTIND=1
+EXTRA_CONF_FILE=$DATADIR/nginx.conf
+SOCKETPATH=$DATADIR/nginx.sock
+CERTPATH=$DATADIR/letsencrypt/certs/$COMMONNAME/fullchain.pem
+KEYPATH=$DATADIR/letsencrypt/certs/$COMMONNAME/privkey.pem
 SSL_CONF=""
+EXTRA_CONF=""
 
 # Parse Arguments
+OPTIND=1
 while getopts "?h:su:" opt; do
 	case "$opt" in
 		h)
@@ -19,31 +23,37 @@ while getopts "?h:su:" opt; do
 		d)
 			DATADIR=$OPTARG
 			;;
+		e)
+			EXTRA_CONF_FILE=$OPTARG
+			;;
 		*)
-			echo "Usage: $0 -h [common_name] -d [data_dir] {domains_list} -s ssl?"
+			echo "Usage: $0 -h [common_name] -d [data_dir] -e [extra_conf_file] {domains_list} -s ssl?"
 			exit
 			;;
 	esac
 done  	
+shift "$((OPTIND-1))"
+DOMAINS=$@
 
 [[ -z $COMMONNAME ]] && echo "-h [common_name] is missing" && exit
-
-shift "$((OPTIND-1))"
-
-DOMAINS=$@
-SOCKETPATH=$DATADIR/nginx.sock
-CERTPATH=$DATADIR/letsencrypt/certs/$COMMONNAME/fullchain.pem
-KEYPATH=$DATADIR/letsencrypt/certs/$COMMONNAME/privkey.pem
 
 # Add domains to ssl
 echo "$COMMONNAME $DOMAINS" | sudo tee $DATADIR/letsencrypt/domains.txt
 
+# Extra configuration
+if [ -f $EXTRA_CONF_FILE ] ; then
+	EXTRA_CONF="`cat $EXTRA_CONF_FILE`" 
+fi;
+
 # Generate Nginx Configuration File
+NGINX_CONF_FILE=/etc/nginx/sites-enabled/$COMMONNAME.conf
+
 render() {
   eval "echo \"$(cat $1|sed 's/\$/@#@/g;s/\%/\$/g')\"" | sed 's/@#@/\$/g'
 }
 render $DIR/nginx.conf > $DIR/nginx.tmp
-render $DIR/nginx.tmp | sudo tee /etc/nginx/sites-enabled/$COMMONNAME.conf
+render $DIR/nginx.tmp | sudo cat > $NGINX_CONF_FILE
 
+# Reload nginx
 echo "Reload Nginx.."
 sudo nginx -s reload
