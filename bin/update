@@ -18,6 +18,20 @@ if [ -f .laas_update] ; then
 	source ./laas_update
 fi
 
+# .nginx.conf file
+render() {
+ eval "echo \"$(cat $1|sed 's/\$/@#@/g;s/\%/\$/g')\"" | sed 's/@#@/\$/g'
+}
+NGINX_CONF=""
+if [ -f .nginx.conf ] ; then
+	NGINX_CONF="`cat .nginx.conf`"
+fi
+if [ -f .nginx.conf.extra ] ; then
+	NGINX_CONF_EXTRA="`cat .nginx.conf.extra`"
+fi
+render /etc/nginx/nginx-default > /etc/nginx/sites-enabled/default.conf
+nginx -s reload
+
 # Init
 if [ ! -e .env ] ; then
   echo "**Installing default .env file**"

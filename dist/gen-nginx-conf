@@ -6,7 +6,6 @@ DATADIR=`dirname $DIR`
 EXTRA_CONF_FILE=$DATADIR/nginx.conf
 SOCKETPATH=$DATADIR/nginx.sock
 SSL_CONF=""
-EXTRA_CONF=""
 
 # Parse Arguments
 OPTIND=1
@@ -20,9 +19,6 @@ while getopts "?h:su:" opt; do
 			;;
 		d)
 			DATADIR=$OPTARG
-			;;
-		e)
-			EXTRA_CONF_FILE=$OPTARG
 			;;
 		*)
 			echo "Usage: $0 -h [common_name] -d [data_dir] -e [extra_conf_file] {domains_list} -s ssl?"

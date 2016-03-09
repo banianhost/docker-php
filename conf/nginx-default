@@ -39,9 +39,17 @@ server {
     location ~ /\.ht {
             deny all;
     }
+	
 
     # Set header expirations on per-project basis
     # location ~* \.(?:ico|css|js|jpe?g|JPG|png|svg|woff)$ {
 	#	expires 365d;
     # }
+	
+	%{NGINX_CONF}
+
 }
+	
+#### Extra Config
+
+%{NGINX_CONF_EXTRA}

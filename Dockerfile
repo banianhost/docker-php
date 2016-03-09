@@ -36,7 +36,7 @@ COPY conf/www.conf /etc/php5/fpm/pool.d/www.conf
 
 # Nginx
 COPY conf/nginx.conf /etc/nginx/nginx.conf
-COPY conf/nginx-default /etc/nginx/sites-enabled/default
+COPY conf/nginx-default /etc/nginx/nginx-default
 
 # Home dir
 RUN mkdir -p /var/www && chown -R www-data:www-data /var/www
