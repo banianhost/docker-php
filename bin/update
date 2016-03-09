@@ -3,11 +3,11 @@
 cd /var/www/laravel
 
 ## LOCK
-if [ -f .lass.lock ] ; then
-	echo "Lock file '.lass.lock' exists, it seems it is already updating ..."
+if [ -f .laas.lock ] ; then
+	echo "Lock file '.laas.lock' exists, it seems it is already updating ..."
 	exit 1
 fi
-touch .lass.lock
+touch .laas.lock
 
 # Do real update
 git pull
@@ -31,4 +31,4 @@ php artisan key:generate
 /var/www/letsencrypt/letsencrypt.sh --cron
 
 ## LOCK
-rm .lass.lock
+rm .laas.lock
