@@ -9,15 +9,23 @@ if [ -f .lass.lock ] ; then
 fi
 touch .lass.lock
 
+# Do real update
 git pull
 composer install --prefer-source
 
-# Init
-if [ ! -e .laas_init ] ; then
-  cp .env.example .env
-  php artisan key:generate
-  touch .laas_init
+# .laas_update file
+if [ -f .laas_update] ; then
+	source ./laas_update
 fi
+
+# Init
+if [ ! -e .env ] ; then
+  echo "**Installing default .env file**"
+  cp -v .env.example .env
+fi
+
+# Re-Generate artisan key
+php artisan key:generate
 
 # Let's Encrypt
 /var/www/letsencrypt/letsencrypt.sh --cron
