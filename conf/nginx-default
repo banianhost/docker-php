@@ -1,7 +1,6 @@
 server {
     # Port that the web server will listen on.
     listen 80 default;
-	listen unix:/var/www/nginx.sock;
 
     # Host that will serve this project.
     server_name _;
@@ -45,11 +44,5 @@ server {
     # location ~* \.(?:ico|css|js|jpe?g|JPG|png|svg|woff)$ {
 	#	expires 365d;
     # }
-	
-	%{NGINX_CONF}
 
 }
-	
-#### Extra Config
-
-%{NGINX_CONF_EXTRA}

@@ -35,20 +35,10 @@ COPY conf/www.conf /etc/php5/fpm/pool.d/www.conf
 
 # Nginx
 COPY conf/nginx.conf /etc/nginx/nginx.conf
-COPY conf/nginx-default /etc/nginx/nginx-default
+COPY conf/nginx-default /etc/nginx/sites-enabled/default
 
 # Home dir
 RUN mkdir -p /var/www && chown -R www-data:www-data /var/www
-
-# Let's Encrypt
-RUN wget -nv -O - https://github.com/lukas2511/letsencrypt.sh/archive/master.tar.gz | tar -xvzf - && \
-	mv letsencrypt.sh-master/ /opt/letsencrypt && \
-	cp /opt/letsencrypt/config.sh.example /opt/letsencrypt/config.sh && \
-	touch /opt/letsencrypt/domains.txt && \
-	mkdir -p /opt/letsencrypt/.acme-challenges
-
-# Dist
-COPY dist /opt/dist
 
 # Lasser
 COPY laaser /usr/share/laaser
