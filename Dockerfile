@@ -5,7 +5,7 @@ MAINTAINER Pooya Parsa <pooya@pi0.ir>
 
 # Install packages
 RUN apt-get update && apt-get install -y git nginx wget \
-	sudo dbus \
+	sudo dbus supervisor \
 	php5-fpm php5-curl php5-mysql php5-mcrypt php5-json php5-cli php5-curl php5-dev \
 	php5-gd php5-redis php5-json php5-imagick libxrender1 \
 	openssl libssl-dev libcurl4-openssl-dev libsasl2-dev libpcre3-dev pkg-config curl
