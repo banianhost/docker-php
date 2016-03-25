@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Start nginx 
-nginx
+# nginx
 
 # Generate ssh key
 if [ ! -f ~/.ssh/id_rsa.pub ] ; then
@@ -34,9 +34,9 @@ touch /var/www/laravel/storage/logs/laravel.log
 ln -fs /var/www/laravel/storage/logs/laravel.log /var/www/logs
 
 # Rotate All Logs
-for l in var/www/logs/* ; do
-	echo "" > $l
-done
+#for l in var/www/logs/* ; do
+#	echo "" > $l
+#done
 
 # Laaser
 mkdir -p /var/www/laravel/public && \

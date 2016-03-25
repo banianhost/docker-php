@@ -1,16 +1,15 @@
 #!/bin/bash
 
-# Init home dir
-mkdir -pv /var/www/logs
+# init home dir
+mkdir -pv /var/www/logs/supervisord
 chown -R www-data:www-data /var/www
 
 echo Starting DBus
 /etc/init.d/dbus start
 
-echo Starting PHP-FPM
-/etc/init.d/php5-fpm start
+#echo Starting PHP-FPM
+#/etc/init.d/php5-fpm start
 
-echo Starting Nginx
 rm /var/www/nginx.sock 
 rm /run/nginx.pid
 chmod 777 /run/
@@ -20,9 +19,11 @@ chown www-data:www-data /var/log/nginx/ -R
 chown www-data:www-data /var/lib/nginx/ -R
 setcap 'cap_net_bind_service=+ep' `which nginx`
 
+# Start www-data entry point
 sudo -u www-data /bin/bash entrypoint-www $@ || exit
 
+# Start supervisord
 echo "Let's go"
-tail -f /var/www/logs/*
+/usr/bin/supervisord
 
-echo Stopping Container
+#tail -f /var/www/logs/*
