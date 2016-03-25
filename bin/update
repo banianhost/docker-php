@@ -30,7 +30,6 @@ if [ -f .nginx.conf.extra ] ; then
 	NGINX_CONF_EXTRA="`cat .nginx.conf.extra`"
 fi
 render /etc/nginx/nginx-default > /etc/nginx/sites-enabled/default
-nginx -s reload
 
 # Init
 if [ ! -e .env ] ; then

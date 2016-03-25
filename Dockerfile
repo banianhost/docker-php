@@ -56,5 +56,11 @@ COPY laaser /usr/share/laaser
 #Bin
 COPY bin /usr/local/bin
 
+#Bin
+COPY bin /usr/local/bin
+
+# Supervisord
+COPY  conf/supervisord.conf /etc/supervisord.conf
+
 #Entrypoint Script
 ENTRYPOINT ["/usr/local/bin/entrypoint"]
