@@ -52,5 +52,7 @@ COPY bin /usr/local/bin
 # Supervisord
 COPY  conf/supervisord.conf /etc/supervisord.conf
 
+EXPOSE 80
+
 #Entrypoint Script
 ENTRYPOINT ["/usr/local/bin/entrypoint"]
