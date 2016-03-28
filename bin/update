@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 cd /var/www/laravel
 
@@ -12,6 +12,7 @@ touch .laas.lock
 # Do real update
 git pull
 composer install --prefer-source --no-ansi --no-dev --no-interaction --no-progress --no-scripts --optimize-autoloader
+composer dump-autoload --optimize
 
 # .laas_update file
 if [ -f .laas_update ] ; then

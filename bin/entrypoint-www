@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Generate ssh key
 if [ ! -f ~/.ssh/id_rsa.pub ] ; then
@@ -25,15 +25,6 @@ if [ ! -d /var/www/laravel ] ; then
 	git clone --recursive $1 /var/www/laravel || exit
 
 fi	
-
-# Logs
-touch /var/www/laravel/storage/logs/laravel.log 
-ln -fs /var/www/laravel/storage/logs/laravel.log /var/www/logs
-
-# Rotate All Logs
-#for l in var/www/logs/* ; do
-#	echo "" > $l
-#done
 
 # Laaser
 mkdir -p /var/www/laravel/public && \

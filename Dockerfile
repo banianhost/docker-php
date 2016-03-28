@@ -1,41 +1,40 @@
 # vim:set ft=dockerfile:
 
-FROM debian:jessie
+FROM php:7-fpm-alpine
 MAINTAINER Pooya Parsa <pooya@pi0.ir>
 
-# Install packages
-RUN apt-get update && apt-get install -y git nginx wget \
-	sudo dbus supervisor \
-	php5-fpm php5-curl php5-mysql php5-mcrypt php5-json php5-cli php5-curl php5-dev \
-	php5-gd php5-redis php5-json php5-imagick libxrender1 \
-	openssl libssl-dev libcurl4-openssl-dev libsasl2-dev libpcre3-dev pkg-config curl
+# Install Base Packages
 
-# Installing the MongoDB PHP Driver with PECL
-RUN pecl install mongodb
+RUN apk --update --no-cache add \
+    supervisor nginx openssl-dev php-cli curl-dev git curl \
+    sudo openssh-client
 
-RUN echo "extension = mongodb.so" > /etc/php5/mods-available/mongo.ini && \
-	ln -fvs /etc/php5/mods-available/mongo.ini /etc/php5/fpm/conf.d/ && \
-	ln -fvs /etc/php5/mods-available/mongo.ini /etc/php5/cli/conf.d/
+RUN docker-php-ext-install bz2 fileinfo ftp gd gettext gmp iconv \
+    intl json mbstring mcrypt mysqli opcache readline posix phar session soap sockets xml xmlreader zip
+
+RUN pecl install mongodb && docker-php-ext-enable mongodb
+
+# Additional Packages
+#RUN apk --nocache add 
 
 # Cleanup
-RUN rm -rf /var/lib/apt/lists/* /var/cache/apt/packages/* && apt-get remove -y php5-dev libssl-dev libcurl4-openssl-dev libsasl2-dev libpcre3-dev pkg-config && apt-get autoremove -y
+RUN rm /var/cache/apk/*
 
 # Install composer
-RUN wget https://getcomposer.org/composer.phar -O /usr/local/bin/composer && \
-	chmod +x /usr/local/bin/composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer 
 
 # Git
 RUN mkdir -p /var/www && \
     chown www-data:www-data -R /var/www && \
     sudo -u www-data git config --global credential.helper store
 
-# Php
-COPY conf/php.ini /etc/php5/fpm/php.ini
-COPY conf/www.conf /etc/php5/fpm/pool.d/www.conf 
+# PHP
+#COPY conf/php.ini /etc/php5/fpm/php.ini
+#COPY conf/www.conf /etc/php5/fpm/pool.d/www.conf 
 
 # Nginx
 COPY conf/nginx.conf /etc/nginx/nginx.conf
-COPY conf/nginx-default /etc/nginx/sites-enabled/default
+COPY conf/nginx-default /etc/nginx/conf.d/default.conf
 
 # Home dir
 RUN mkdir -p /var/www && chown -R www-data:www-data /var/www
@@ -44,10 +43,7 @@ RUN mkdir -p /var/www && chown -R www-data:www-data /var/www
 COPY laaser /usr/share/laaser
 
 #Bin
-COPY bin /usr/local/bin
-
-#Bin
-COPY bin /usr/local/bin
+COPY bin /
 
 # Supervisord
 COPY  conf/supervisord.conf /etc/supervisord.conf
@@ -55,4 +51,4 @@ COPY  conf/supervisord.conf /etc/supervisord.conf
 EXPOSE 80
 
 #Entrypoint Script
-ENTRYPOINT ["/usr/local/bin/entrypoint"]
+ENTRYPOINT ["/entrypoint"]

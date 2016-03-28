@@ -8,19 +8,14 @@ server {
     # The location of our projects public directory.
     root            /var/www/laravel/public;
 
-	#
-    index index.php;
+    # Index	
+    index index.php index.html;
     try_files $uri $uri/ /index.php?$query_string;
 
 	# Laaser user friendly urls 
     location /laaser {
 		try_files $uri $uri/ $uri.php?$query_string;
     }
-
-	# Let's Encrypt
-	location /.well-known/acme-challenge {
-		alias /var/www/letsencrypt/.acme-challenges;
-	}
 
     # Remove trailing slash to please routing system.
     if (!-d $request_filename) {
@@ -29,9 +24,9 @@ server {
 
     # PHP FPM configuration.
     location ~* \.php$ {
-		include snippets/fastcgi-php.conf;
+        include        fastcgi_params;
 		fastcgi_param   HTTPS $fe_https;
-		fastcgi_pass unix:/var/run/php5-fpm.sock;
+		fastcgi_pass 127.0.0.1:9000;
     }
 
     # We don't need .ht files with nginx.
