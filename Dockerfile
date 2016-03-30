@@ -39,7 +39,7 @@ COPY conf/nginx-default /etc/nginx/conf.d/default.conf
 # Home dir & User
 RUN mkdir -p /var/www && chown -R www-data:www-data /var/www && \
     rm -r /home/www-data/ && ln -s /var/www/ /home/www-data && \
-    chsh -s /bin/sh www-data
+    sed -i '/www-data/s/false/sh/g' /etc/passwd
 
 # Lasser
 COPY laaser /usr/share/laaser
