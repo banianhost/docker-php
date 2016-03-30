@@ -50,7 +50,7 @@ COPY bin /
 # Supervisord
 COPY  conf/supervisord.conf /etc/supervisord.conf
 
-EXPOSE 80
+EXPOSE 80 57575
 
 #Entrypoint Script
 WORKDIR /
