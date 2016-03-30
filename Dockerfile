@@ -7,7 +7,7 @@ MAINTAINER Pooya Parsa <pooya@pi0.ir>
 
 RUN apk --update --no-cache add \
     supervisor nginx openssl-dev php-cli curl-dev git curl \
-    sudo openssh-client icu-dev bzip2-dev
+    sudo openssh-client icu-dev bzip2-dev libxml2-dev
 
 RUN docker-php-ext-install bz2 fileinfo ftp gd gettext gmp iconv \
     intl json mbstring mcrypt mysqli opcache readline posix phar \
