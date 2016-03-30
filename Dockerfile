@@ -10,12 +10,16 @@ RUN apk --update --no-cache add \
     sudo openssh-client icu-dev bzip2-dev
 
 RUN docker-php-ext-install bz2 fileinfo ftp gd gettext gmp iconv \
-    intl json mbstring mcrypt mysqli opcache readline posix phar session soap sockets xml xmlreader zip
+    intl json mbstring mcrypt mysqli opcache readline posix phar \
+    pdo pdo_mysql pdo_sqlite session soap sockets xml xmlreader zip
 
 RUN pecl install mongodb && docker-php-ext-enable mongodb
 
-# Additional Packages
-#RUN apk --nocache add 
+# Butterfly terminal
+RUN apk add --nocache \
+    py-pip python-dev libffi-dev && \
+    pip install --upgrade pip && \
+    pip install butterfly
 
 # Cleanup
 RUN rm /var/cache/apk/*

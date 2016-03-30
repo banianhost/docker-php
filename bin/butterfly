@@ -1,0 +1,11 @@
+#!/bin/sh
+
+[ -z "$PASSWORD" ] && echo "Need to set PASSWORD To Use Butterfly" && exit 0;
+
+# Set password
+echo "www-data:${PASSWORD}" | chpasswd
+
+# Set shell
+chsh -s /bin/sh www-data
+
+/usr/bin/butterfly.server.py --unsecure --port=57575
