@@ -5,7 +5,4 @@
 # Set password
 echo "www-data:${PASSWORD}" | chpasswd
 
-# Set shell
-chsh -s /bin/sh www-data
-
 /usr/bin/butterfly.server.py --unsecure --port=57575

@@ -32,17 +32,14 @@ RUN mkdir -p /var/www && \
     chown www-data:www-data -R /var/www && \
     sudo -u www-data git config --global credential.helper store
 
-# PHP
-#COPY conf/php.ini /etc/php5/fpm/php.ini
-#COPY conf/www.conf /etc/php5/fpm/pool.d/www.conf 
-
 # Nginx
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 COPY conf/nginx-default /etc/nginx/conf.d/default.conf
 
-# Home dir
+# Home dir & User
 RUN mkdir -p /var/www && chown -R www-data:www-data /var/www && \
-    rm -r /home/www-data/ && ln -s /var/www/ /home/www-data
+    rm -r /home/www-data/ && ln -s /var/www/ /home/www-data && \
+    chsh -s /bin/sh www-data
 
 # Lasser
 COPY laaser /usr/share/laaser
