@@ -7,7 +7,7 @@ MAINTAINER Pooya Parsa <pooya@pi0.ir>
 
 RUN apk --update --no-cache add \
     supervisor nginx openssl-dev php-cli curl-dev git curl \
-    sudo openssh-client
+    sudo openssh-client icu-dev bzip2-dev
 
 RUN docker-php-ext-install bz2 fileinfo ftp gd gettext gmp iconv \
     intl json mbstring mcrypt mysqli opcache readline posix phar session soap sockets xml xmlreader zip
@@ -37,7 +37,8 @@ COPY conf/nginx.conf /etc/nginx/nginx.conf
 COPY conf/nginx-default /etc/nginx/conf.d/default.conf
 
 # Home dir
-RUN mkdir -p /var/www && chown -R www-data:www-data /var/www
+RUN mkdir -p /var/www && chown -R www-data:www-data /var/www && \
+    rm -r /home/www-data/ && ln -s /var/www/ /home/www-data
 
 # Lasser
 COPY laaser /usr/share/laaser
@@ -51,4 +52,6 @@ COPY  conf/supervisord.conf /etc/supervisord.conf
 EXPOSE 80
 
 #Entrypoint Script
+WORKDIR /
+CMD ["-"]
 ENTRYPOINT ["/entrypoint"]

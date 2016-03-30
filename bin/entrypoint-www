@@ -36,4 +36,4 @@ if [ -f /var/www/laravel/.laas.lock ] ; then
 fi
 
 # Update repo
-update
+/update
