@@ -42,7 +42,7 @@ services:
       - ./data/www:/var/www
     environment:
       -  VIRTUAL_HOST=my.subdomain.tld,butterfly.my.subdomain.dld
-      -  PASSWORD=root_password_for_butterfly
+      -  PASSWORD=www-data_password
       -  WEBHOOK_SECRET=123
     restart: always
     network_mode: "bridge"
