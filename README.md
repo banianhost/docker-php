@@ -27,20 +27,18 @@ Butterfly is a xterm compatible terminal that runs in your browser. [See Here](h
 - Very **Light**, no database running inside container
 - Easy Shell Access Using [**Butterfly**](https://github.com/paradoxxxzero/butterfly)
 
+# Webhook
+
+Simply set `WEBHOOK_SECRET` environemnt and use injected url `http://project_url/webhook.php?secret=123` to use webhook.   
+if you want to add custom commands, create a `.webhookrc` script in root of your laravel project.  
+
+# Butterfly
+
+You can use a real **web based** console for your container. just set `PASSWORD` environment variable and access your server using `butterfly.*` subdomains.
+
 # Quick Start
 
-+ To run a test Instance
-```bash
-docker run --rm -p 2739:80 -itv /tmp/lass_test:/var/www quay.io/pooya/laas http://github.com/bestmomo/laravel5-exampe
-```
-Your container is Ready on `http://host_ip:2739`
-    
-+ To run a instance that starts at host boot time:
-```bash
-docker run --name <Name> --restart=always -itdv <DataStorage>:/var/www quay.io/pooya/laas <YourLaravelProjectGitURL>
-```
-
-+ Simple Docker file with database
++ Simple Docker-Compose
 
 ```yaml
 version: '2'
@@ -51,22 +49,11 @@ services:
     volumes:
       - ./data/www:/var/www
     environment:
-      -  VIRTUAL_HOST=my.subdomain.tld
-    links:
-      - db:db
-    restart: always
-    network_mode: "bridge"
-  db:
-    image: mariadb
-    volumes:
-      - ./data/mariadb:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=<MYSQL_PASSWORD>
+      -  VIRTUAL_HOST=my.subdomain.tld,butterfly.my.subdomain.dld
+      -  PASSWORD=root_password_for_butterfly
+      -  WEBHOOK_SECRET=123
     restart: always
     network_mode: "bridge"
 ```
-
-
-
 
 

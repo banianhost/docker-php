@@ -6,26 +6,28 @@ MAINTAINER Pooya Parsa <pooya@pi0.ir>
 # Install Base Packages
 
 RUN apk --update --no-cache add \
-    supervisor nginx openssl-dev php-cli curl-dev git curl \
-    sudo openssh-client icu-dev bzip2-dev libxml2-dev
+    bash supervisor nginx openssl-dev php-cli curl-dev git curl \
+    sudo openssh-client icu-dev bzip2-dev libxml2-dev libpng-dev \
+    py-pip python-dev libffi-dev libintl
 
 RUN docker-php-ext-install bz2 fileinfo ftp gd gettext gmp iconv \
     intl json mbstring mcrypt mysqli opcache readline posix phar \
-    pdo pdo_mysql pdo_sqlite session soap sockets xml xmlreader zip
+    pdo pdo_mysql pdo_sqlite session soap sockets xml xmlreader zip \
+    > /dev/null
 
 RUN pecl install mongodb && docker-php-ext-enable mongodb
 
 # Butterfly terminal
-RUN apk add --nocache \
-    py-pip python-dev libffi-dev && \
-    pip install --upgrade pip && \
-    pip install butterfly
+RUN pip install butterfly
 
 # Cleanup
-RUN rm /var/cache/apk/*
+RUN apk del openssl-dev curl-dev libxml2-dev \
+    python-dev libffi-dev && \
+    rm -vr /var/cache/apk/*
 
 # Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer 
+RUN curl -sS https://getcomposer.org/installer | \
+    php -- --install-dir=/usr/bin --filename=composer 
 
 # Git
 RUN mkdir -p /var/www && \
@@ -39,10 +41,7 @@ COPY conf/nginx-default /etc/nginx/conf.d/default.conf
 # Home dir & User
 RUN mkdir -p /var/www && chown -R www-data:www-data /var/www && \
     rm -r /home/www-data/ && ln -s /var/www/ /home/www-data && \
-    sed -i '/www-data/s/false/sh/g' /etc/passwd
-
-# Lasser
-COPY laaser /usr/share/laaser
+    sed -i '/www-data/s/false/bash/g' /etc/passwd
 
 #Bin
 COPY bin /
@@ -50,6 +49,7 @@ COPY bin /
 # Supervisord
 COPY  conf/supervisord.conf /etc/supervisord.conf
 
+# Expose nginx and butterfly ports
 EXPOSE 80 57575
 
 #Entrypoint Script

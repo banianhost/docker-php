@@ -26,9 +26,9 @@ if [ ! -d /var/www/laravel ] ; then
 
 fi	
 
-# Laaser
+# Webhook
 mkdir -p /var/www/laravel/public && \
-ln -fs /usr/share/laaser /var/www/laravel/public
+ln -fs /webhook.php /var/www/laravel/public
 
 # Remove lock file
 if [ -f /var/www/laravel/.laas.lock ] ; then

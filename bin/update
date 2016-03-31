@@ -9,13 +9,16 @@ if [ -f .laas.lock ] ; then
 fi
 touch .laas.lock
 
+# Set website to maintnance mode
+php artisan down
+
 # Do real update
 git pull
 composer install --prefer-source --no-ansi --no-dev --no-interaction --no-progress --no-scripts --optimize-autoloader
 
-# .laas_update file
-if [ -f .laas_update ] ; then
-	./laas_update
+# .webhookrc file
+if [ -f /var/www/laravel/.webhookrc ] ; then
+	/bin/bash -c /var/www/laravel/.webhookrc
 fi
 
 # Init
@@ -25,6 +28,9 @@ if [ ! -e .env ] ; then
   # Re-Generate artisan key
   php artisan key:generate
 fi
+
+## Site UP
+php artisan up
 
 ## LOCK
 rm .laas.lock
