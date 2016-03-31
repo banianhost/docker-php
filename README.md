@@ -34,7 +34,10 @@ if you want to add custom commands, create a `.webhookrc` script in root of your
 
 # Butterfly
 
-You can use a real **web based** console for your container. just set `PASSWORD` environment variable and access your server using `butterfly.*` subdomains.
+You can use a real **web based** console for your container. just set `PASSWORD` environment variable and access your server using `butterfly.*` subdomains. login username is `www-data`.   
+
+![Butterfly in web browser](butterfly.png)
+
 
 # Quick Start
 
