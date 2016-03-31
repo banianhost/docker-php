@@ -8,12 +8,12 @@ Laas is developed under inspiration of [Laravel Forge](https://forge.laravel.com
 # Features
 - Production ready And fully dockerized environment for hosting Laravel applications.
 - All Data is independent of container, just delete and create an new one any time you want.
-- Powered by **Nginx**, **PHP7-FPM** on light **Alpine Linux**
+- Powered by **Nginx**, **PHP7-FPM** on light **Alpine Linux**.
 - **Webhooks** are ready ! Just push and commit your changes and your site is up!
 - PHP **Mongo** extension compiled.
 - **SSH-Keys** are auto-generated for git access.
 - Very **Light**, no database running inside container.
-- Easy Shell Access Using [**Butterfly**](https://github.com/paradoxxxzero/butterfly)
+- WebUI Shell Access Using [**Butterfly**](https://github.com/paradoxxxzero/butterfly)
 
 # Webhook
 
