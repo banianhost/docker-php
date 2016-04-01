@@ -5,7 +5,7 @@ mkdir -pv /var/www/logs
 chown -R www-data:www-data /var/www
 
 # Start www-data entry point
-sudo -u www-data /bin/sh -c /entrypoint-www $@ || exit
+sudo -u www-data /entrypoint-www $@ || exit
 
 # Start supervisord
 /usr/bin/supervisord -c /etc/supervisord.conf
