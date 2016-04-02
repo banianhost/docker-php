@@ -4,6 +4,9 @@
 mkdir -pv /var/www/logs
 chown -R www-data:www-data /var/www
 
+# tmp dir
+mkdir -p /var/www/tmp && chown -R www-data:www-data /var/www/tmp
+
 # Start www-data entry point
 sudo -u www-data /entrypoint-www $@ || exit
 
