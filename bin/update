@@ -13,7 +13,7 @@ touch .laas.lock
 php artisan down
 
 # Do real update
-git pull
+yes | git pull
 composer install --prefer-source --no-ansi --no-dev --no-interaction --no-progress --no-scripts --optimize-autoloader
 
 # .webhookrc file
