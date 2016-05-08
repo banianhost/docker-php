@@ -1,2 +1,0 @@
-#!/bin/bash
-docker run --rm -p 2739:80 -itv /tmp/lass_test:/var/www pooya/laas http://github.com/bestmomo/laravel5-example
