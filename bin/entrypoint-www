@@ -22,7 +22,7 @@ if [ ! -d /var/www/laravel ] ; then
 		echo "illegal number of parameters, please specify git repo url"
 		exit
 	fi
-	yes | git clone --recursive $1 /var/www/laravel || exit
+	yes yes| GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no' git clone --recursive $1 /var/www/laravel || exit
 
 fi	
 

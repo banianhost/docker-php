@@ -1,29 +1,25 @@
 # vim:set ft=dockerfile:
 
-FROM php:7-fpm-alpine
+FROM php:fpm
 MAINTAINER Pooya Parsa <pooya@pi0.ir>
+
+ENV V=1.9
 
 # Install Base Packages
 
-RUN apk --update --no-cache add \
-    bash supervisor nginx openssl-dev php-cli curl-dev git curl \
-    sudo openssh-client icu-dev bzip2-dev libxml2-dev libpng-dev \
-    py-pip python-dev libffi-dev libintl
+RUN apt-get update && apt-get install -y \
+    bash supervisor nginx git curl \
+    sudo openssh-client libxml2-dev libpng-dev \
+    libbz2-dev libicu-dev libcurl4-openssl-dev libgmp3-dev \
+    libmcrypt-dev libedit-dev libssl-dev
 
-RUN docker-php-ext-install bz2 fileinfo ftp gd gettext gmp iconv \
-    intl json mbstring mcrypt mysqli opcache readline posix phar \
-    pdo pdo_mysql pdo_sqlite session soap sockets xml xmlreader zip \
+RUN docker-php-ext-install bz2 ftp gd gettext \
+    intl mcrypt mysqli opcache pdo_mysql soap zip \
     > /dev/null
 
 RUN pecl install mongodb && docker-php-ext-enable mongodb
 
-# Butterfly terminal
-RUN pip install butterfly
-
 # Cleanup
-RUN apk del openssl-dev curl-dev libxml2-dev \
-    python-dev libffi-dev && \
-    rm -vr /var/cache/apk/*
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | \
@@ -40,7 +36,7 @@ COPY conf/nginx-default /etc/nginx/conf.d/default.conf
 
 # Home dir & User
 RUN mkdir -p /var/www && chown -R www-data:www-data /var/www && \
-    rm -r /home/www-data/ && ln -s /var/www/ /home/www-data && \
+    ln -s /var/www/ /home/www-data && \
     sed -i '/www-data/s/false/bash/g' /etc/passwd
 
 #Bin
