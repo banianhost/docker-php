@@ -10,10 +10,7 @@ RUN apk --update --no-cache add \
     sudo openssh-client icu-dev bzip2-dev libxml2-dev libpng-dev \
     py-pip python-dev libffi-dev libintl
 
-RUN docker-php-ext-install bz2 fileinfo ftp gd gettext gmp iconv \
-    intl json mbstring mcrypt mysqli opcache readline posix phar \
-    pdo pdo_mysql pdo_sqlite session soap sockets xml xmlreader zip \
-    > /dev/null
+RUN docker-php-ext-install bz2 ftp gd gettext intl mcrypt mysqli opcache pdo_mysql soap zip > /dev/null
 
 RUN pecl install mongodb && docker-php-ext-enable mongodb
 
@@ -54,5 +51,5 @@ EXPOSE 80 57575
 
 #Entrypoint Script
 WORKDIR /
-CMD ["-"]
+CMD ["."]
 ENTRYPOINT ["/entrypoint"]

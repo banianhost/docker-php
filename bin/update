@@ -14,7 +14,13 @@ php artisan down
 
 # Do real update
 yes | git pull
-composer install --prefer-source --no-ansi --no-dev --no-interaction --no-progress --no-scripts --optimize-autoloader
+
+if [ -n $DEV ] ; then
+    echo "## DEV MODE ##"
+    composer install --prefer-source --no-ansi --no-interaction --no-progress --no-scripts --optimize-autoloader
+else
+    composer install --prefer-source --no-ansi --no-dev --no-interaction --no-progress --no-scripts --optimize-autoloader
+fi
 
 # .webhookrc file
 if [ -f /var/www/laravel/.webhookrc ] ; then
