@@ -10,7 +10,7 @@ RUN apk --update --no-cache add \
     sudo openssh-client icu-dev bzip2-dev libxml2-dev libpng-dev \
     py-pip python-dev libffi-dev libintl
 
-RUN docker-php-ext-install bz2 ftp gd gettext intl mcrypt mysqli opcache pdo_mysql soap zip > /dev/null
+RUN docker-php-ext-install bz2 ftp gd gettext intl mcrypt mysqli opcache pdo_mysql soap zip mbstring > /dev/null
 
 RUN pecl install mongodb && docker-php-ext-enable mongodb
 

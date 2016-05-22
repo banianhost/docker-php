@@ -1,21 +1,17 @@
 #!/bin/sh
 
 # Generate ssh key
-if [ ! -f ~/.ssh/id_rsa.pub ] ; then
- echo -e "\n\n\n" | ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa -q
+if [ ! -f /var/www/.ssh/id_rsa.pub ] ; then
+ echo -e "\n\n\n" | ssh-keygen -t rsa -N "" -f /var/www/.ssh/id_rsa -q
  echo ----------------------------------------
  echo Your SSH Key is Ready
  echo ----------------------------------------
- cat ~/.ssh/id_rsa.pub
+ cat /var/www/.ssh/id_rsa.pub
  echo ----------------------------------------
 fi
 
 # Check if data is not initialized yet
 if [ ! -d /var/www/laravel ] ; then
-
-	# Probe ssh-keys 
-	ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-	ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
 	
 	# Clone project
 	if [ $# -ne 1 ]; then

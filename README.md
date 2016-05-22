@@ -8,24 +8,16 @@ Laas is developed under inspiration of [Laravel Forge](https://forge.laravel.com
 # Features
 - Production ready And fully dockerized environment for hosting Laravel applications.
 - All Data is independent of container, just delete and create an new one any time you want.
-- Powered by **Nginx**, **PHP7-FPM** on light **Alpine Linux**.
+- Powered by **Nginx**, **PHP7-FPM** on latest **Ubuntu**.
 - **Webhooks** are ready ! Just push and commit your changes and your site is up!
 - PHP **Mongo** extension compiled.
 - **SSH-Keys** are auto-generated for git access.
 - Very **Light**, no database running inside container.
-- WebUI Shell Access Using [**Butterfly**](https://github.com/paradoxxxzero/butterfly)
 
 # Webhook
 
 Simply set `WEBHOOK_SECRET` environemnt and use injected url `http://project_url/webhook.php?secret=123` to use webhook.   
 if you want to add custom commands, create a `.webhookrc` script in root of your laravel project.  
-
-# Butterfly
-   
-Butterfly is a xterm compatible terminal that runs in your browser. [See Here](https://github.com/paradoxxxzero/butterfly)   
-You can use a real **web based** console for your container. just set `PASSWORD` environment variable and access your server using `butterfly.*` subdomains. login username is `www-data`.   
-
-![Butterfly in web browser](butterfly.png)
 
 
 # Quick Start
@@ -47,5 +39,4 @@ services:
     restart: always
     network_mode: "bridge"
 ```
-
 
