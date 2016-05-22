@@ -24,7 +24,7 @@ RUN apt-get install -y \
     php-memcached php-mongodb php-mysql php-pear php-redis php-xml php-intl php-soap
 
 # Install php v8js
-RUN apt-get install -y libv8-dev libv8-dbg g++ cpp \
+RUN apt-get install -y libv8-dev g++ cpp \
  && pecl install v8js
 
 # Cleanup
