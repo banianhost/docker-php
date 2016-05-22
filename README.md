@@ -13,6 +13,7 @@ Laas is developed under inspiration of [Laravel Forge](https://forge.laravel.com
 - PHP **Mongo** extension compiled.
 - **SSH-Keys** are auto-generated for git access.
 - Very **Light**, no database running inside container.
+- **NEW** Gulp super ready, just edit your gulp file, gulp watch is always running!
 
 # Webhook
 
