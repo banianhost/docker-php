@@ -1,6 +1,6 @@
 <pre>
 <?php 
-$secret = @file_get_contents('/WEBHOOK_SECRET');
+$secret = trim(file_get_contents('/WEBHOOK_SECRET'));
 if(!$secret) die('WEBHOOK_SECRET is not defined');
 if(!isset($_REQUEST['secret']) || $_REQUEST['secret']!==$secret) die('Invalid Secret');
 $secret=null;

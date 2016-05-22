@@ -25,7 +25,7 @@ echo "--------------------------------------"
 
 # Npm
 echo "Installing npm dependencies..." 
-npm set progress=false
+npm set progress=true
 npm install
 echo "--------------------------------------"
 
