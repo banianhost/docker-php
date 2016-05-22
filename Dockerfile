@@ -11,11 +11,8 @@ RUN apt-get update \
  && apt-get install -y \
     bash supervisor nginx git curl sudo openssh-client
 
-# Install node.js and gulp
-RUN curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash - \
- && apt-get install -y nodejs \
- && npm install --global gulp-cli
-
+# Install node.js
+RUN curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash && apt-get install -y nodejs
 
 # Install php
 RUN apt-get install -y \
