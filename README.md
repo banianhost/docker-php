@@ -29,11 +29,11 @@ version: '2'
 services:
   laravel:
     image: quay.io/pooya/laas
-    command: https://github.com/some/repo.git
     volumes:
       - ./data/www:/var/www
     environment:
       -  VIRTUAL_HOST=my.subdomain.tld,butterfly.my.subdomain.dld
+      -  GIT_REPO=https://github.com/some/repo.git
       -  PASSWORD=www-data_password
       -  WEBHOOK_SECRET=123
     restart: always

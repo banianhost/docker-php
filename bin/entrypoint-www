@@ -1,25 +1,27 @@
 #!/bin/sh
+HOME=/var/www
+cd /var/www
 
 # Generate ssh key
 if [ ! -f /var/www/.ssh/id_rsa.pub ] ; then
  echo -e "\n\n\n" | ssh-keygen -t rsa -N "" -f /var/www/.ssh/id_rsa -q
- echo ----------------------------------------
- echo Your SSH Key is Ready
+fi
+
+echo ----------------------------------------
+ echo Public SSH Key is :
  echo ----------------------------------------
  cat /var/www/.ssh/id_rsa.pub
- echo ----------------------------------------
-fi
+echo ----------------------------------------
 
 # Check if data is not initialized yet
 if [ ! -d /var/www/laravel ] ; then
-	
-	# Clone project
-	if [ $# -ne 1 ]; then
-		echo "illegal number of parameters, please specify git repo url"
-		exit
-	fi
-	yes yes| GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no' git clone --recursive $1 /var/www/laravel || exit
-
+    if [ -z $GIT_REPO ] ; then
+        echo "ALERT: GIT_REPO IS NOT SET"
+        mkdir -p /var/www/laravel
+    else
+    	# Clone project
+    	yes | GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no' git clone --recursive $GIT_REPO /var/www/laravel
+    fi
 fi	
 
 # Webhook
@@ -31,5 +33,10 @@ if [ -f /var/www/laravel/.laas.lock ] ; then
 	rm /var/www/laravel/.laas.lock
 fi
 
-# Update repo
-/update
+# Execute cmd
+if [ $# -eq 0 ] ; then
+    echo "Executing update script..."
+    /update
+else
+    cd /var/www/laravel && $@
+fi

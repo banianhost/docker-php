@@ -56,5 +56,4 @@ EXPOSE 80
 
 #Entrypoint Script
 WORKDIR /
-CMD ["-"]
 ENTRYPOINT ["/entrypoint"]

@@ -7,8 +7,12 @@ chown -R www-data:www-data /var/www
 # tmp dir
 mkdir -p /var/www/tmp && chown -R www-data:www-data /var/www/tmp
 
+# npm
+chown -R www-data:www-data /root/.npm
+ln -fs /root/.npm /var/www/.npm
+
 # Start www-data entry point
-HOME=/var/www sudo -u www-data -g www-data /entrypoint-www $@ || exit
+HOME=/var/www sudo -E -u www-data -g www-data /entrypoint-www $@ || exit
 
 # Start supervisord
-/usr/bin/supervisord -c /etc/supervisord.conf
+[ $# -eq 0 ] && /usr/bin/supervisord -c /etc/supervisord.conf

@@ -1,5 +1,5 @@
 #!/bin/sh
-
+HOME=/var/www
 cd /var/www/laravel
 
 ## LOCK
