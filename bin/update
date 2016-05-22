@@ -15,7 +15,7 @@ php artisan down
 # Do real update
 yes | git pull
 
-if [ -n $DEV ] ; then
+if [ -v DEV ] ; then
     echo "## DEV MODE ##"
     composer install --prefer-source --no-ansi --no-interaction --no-progress --no-scripts --optimize-autoloader
 else
