@@ -47,7 +47,7 @@ RUN mkdir -p /run/php
 
 #Bin
 COPY bin /
-RUN ln -s /cmd /bin/
+RUN ln -s /cmd /bin/ && chmod +x /cmd && chmod +x /bin/cmd
 
 # Supedvisord
 COPY  conf/supervisord.conf /etc/supervisord.conf
