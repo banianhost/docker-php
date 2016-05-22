@@ -19,6 +19,10 @@ Laas is developed under inspiration of [Laravel Forge](https://forge.laravel.com
 Simply set `WEBHOOK_SECRET` environemnt and use injected url `http://project_url/webhook.php?secret=123` to use webhook.   
 if you want to add custom commands, create a `.webhookrc` script in root of your laravel project.  
 
+# Running commands
+
+You can use exec + `cmd` command to run commands inside laravel project like :
+``` php exec -it <container_name> cmd php artisan help ```
 
 # Quick Start
 

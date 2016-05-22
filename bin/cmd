@@ -1,0 +1,5 @@
+#!/bin/bash
+SHELL=BASH
+HOME=/var/www
+cd /var/www/laravel
+[ -z $@ ] || sudo -E -u www-data -g www-data $@
