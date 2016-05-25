@@ -9,20 +9,18 @@ ENV LAAS_VER=2.0
 RUN apt-get update \
  && apt-get dist-upgrade -y \
  && apt-get install -y \
-    bash supervisor nginx git curl sudo openssh-client
+    bash supervisor nginx git curl sudo openssh-client \
+    software-properties-common build-essential make gcc
 
 # Install node.js
-RUN curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash && apt-get install -y nodejs
+RUN curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash \
+ && apt-get install -y nodejs
 
 # Install php
 RUN apt-get install -y \
     php php-apcu php-bz2 php-cache php-cli php-curl php-fpm php-gd php-geoip \
     php-gettext php-gmp php-imagick php-imap php-json php-mcrypt php-mbstring \
-    php-memcached php-mongodb php-mysql php-pear php-redis php-xml php-intl php-soap
-
-# Install php v8js
-RUN apt-get install -y libv8-dev g++ cpp \
- && pecl install v8js
+    php-memcached php-mongodb php-mysql php-pear php-redis php-xml php-intl php-soap php-dev
 
 # Cleanup
 RUN rm -rf /var/cache/apt
@@ -31,6 +29,16 @@ RUN rm -rf /var/cache/apt
 RUN curl -sS https://getcomposer.org/installer | \
     php -- --install-dir=/usr/bin --filename=composer 
 
+# V8-JS
+RUN curl -#L https://ni8.ir/v8js.txz | tar -xJvf-
+RUN mv release/*.so /usr/lib && rm -r release \
+ && echo "extension=/usr/lib/v8js.so" > /etc/php/7.0/mods-available/v8js.ini \
+ && phpenmod v8js
+
+# PHP-FPM
+RUN mkdir -p /run/php
+
+
 # Nginx
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 COPY conf/nginx-default /etc/nginx/conf.d/default.conf
@@ -38,9 +46,6 @@ COPY conf/nginx-default /etc/nginx/conf.d/default.conf
 # www-data user
 RUN mkdir -p /var/www && chown -R www-data:www-data /var/www && \
     ln -s /var/www/ /home/www-data
-
-# PHP
-RUN mkdir -p /run/php
 
 #Bin
 COPY bin /
