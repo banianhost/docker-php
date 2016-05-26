@@ -20,7 +20,7 @@ echo "--------------------------------------"
 
 # Composer
 echo "Installing composer dependencies..."
-composer install --prefer-source --no-ansi --no-interaction --no-progress --no-scripts --optimize-autoloader
+composer install --prefer-source --no-ansi --no-interaction --no-progress --optimize-autoloader
 echo "--------------------------------------"
 
 # .webhookrc file
