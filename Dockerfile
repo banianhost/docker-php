@@ -41,6 +41,7 @@ RUN mv release/*.so /usr/lib && rm -r release \
 
 # npm packages
 RUN npm install --global gulp-cli nodemon
+RUN ln /bin/true /bin/notify-send
 
 # PHP-FPM
 RUN mkdir -p /run/php

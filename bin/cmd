@@ -1,7 +1,3 @@
 #!/bin/bash
-export SHELL=BASH
-export TERM=xterm
-export HOME=/var/www
-export DISABLE_NOTIFIER=true;
 cd /var/www/laravel
 [ $# -eq 0 ] || sudo -E -u www-data -g www-data $@

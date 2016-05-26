@@ -32,8 +32,6 @@ fi
 if [ ! -e .env ] ; then
   echo "**Installing default .env file**"
   cp -v .env.example .env
-  # Re-Generate artisan key
-  php artisan key:generate
 fi
 
 ## Site UP
