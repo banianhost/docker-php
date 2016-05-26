@@ -22,6 +22,10 @@ RUN apt-get install -y \
     php-gettext php-gmp php-imagick php-imap php-json php-mcrypt php-mbstring \
     php-memcached php-mongodb php-mysql php-pear php-redis php-xml php-intl php-soap php-dev
 
+# Install additional packages
+RUN apt-get install -y \
+   zip unzip php-zip
+
 # Cleanup
 RUN rm -rf /var/cache/apt
 
@@ -38,7 +42,6 @@ RUN mv release/*.so /usr/lib && rm -r release \
 # PHP-FPM
 RUN mkdir -p /run/php
 
-
 # Nginx
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 COPY conf/nginx-default /etc/nginx/conf.d/default.conf
@@ -53,6 +56,9 @@ RUN ln -s /cmd /bin/ && chmod +x /cmd && chmod +x /bin/cmd
 
 # Supedvisord
 COPY  conf/supervisord.conf /etc/supervisord.conf
+
+# Default repo
+ENV GIT_REPO=.
 
 # Expose nginx port
 EXPOSE 80

@@ -15,7 +15,7 @@ echo "Artisan down!"
 
 # Do real update
 echo "Pulling git repo..."
-yes | git pull
+git pull
 echo "--------------------------------------"
 
 # Composer

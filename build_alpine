@@ -1,2 +1,0 @@
-#!/bin/bash
-docker build -t pooya/laas:alpine -f Dockerfile.alpine .

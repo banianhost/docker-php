@@ -28,13 +28,13 @@ You can use exec + `cmd` command to run commands inside laravel project like :
 
 # Quick Start
 
-Simple Docker-Compose :
+## Simple Docker-Compose :
 
 ```yaml
 version: '2'
 services:
   laravel:
-    image: quay.io/pooya/laas
+    image: pooya/laas
     volumes:
       - ./data/www:/var/www
     environment:
@@ -46,3 +46,31 @@ services:
     network_mode: "bridge"
 ```
 
+## Alternative Docker-Copose:   
+You can also create a docker compose inside your laravel repository and mount project to `/var/www/laravel`
+   
+docker-compose.yaml:
+```yaml
+version: '2'
+services:
+  www:
+    image: pooya/laas
+    volumes:
+      - .:/var/www/laravel
+      - ./.laas:/var/www
+    env_file: .env
+    network_mode: "bridge"
+    restart: always
+```
+   
+.env:
+```
+VIRTUAL_HOST=my-website.com
+WEBHOOK_SECRET=123
+
+```
+   
+.gitingnore:
+```
+/.laas*
+```
