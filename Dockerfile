@@ -39,6 +39,9 @@ RUN mv release/*.so /usr/lib && rm -r release \
  && echo "extension=/usr/lib/v8js.so" > /etc/php/7.0/mods-available/v8js.ini \
  && phpenmod v8js
 
+# Gulp
+RUN npm install --global gulp-cli
+
 # PHP-FPM
 RUN mkdir -p /run/php
 
