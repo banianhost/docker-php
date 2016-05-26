@@ -4,6 +4,7 @@
 mkdir -pv /var/www/logs
 chown -R www-data:www-data /var/www
 chmod g+w -R /var/www
+chmod 700 -R /var/www/.ssh
 
 # tmp dir
 mkdir -p /var/www/tmp && chown -R www-data:www-data /var/www/tmp
