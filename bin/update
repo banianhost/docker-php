@@ -23,12 +23,6 @@ echo "Installing composer dependencies..."
 composer install --prefer-source --no-ansi --no-interaction --no-progress --no-scripts --optimize-autoloader
 echo "--------------------------------------"
 
-# Npm
-echo "Installing npm dependencies..." 
-npm set progress=true
-npm install
-echo "--------------------------------------"
-
 # .webhookrc file
 if [ -f /var/www/laravel/.webhookrc ] ; then
 	/bin/bash -c /var/www/laravel/.webhookrc
