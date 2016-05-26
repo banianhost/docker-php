@@ -1,5 +1,6 @@
 #!/bin/bash
 SHELL=BASH
+TERM=xterm
 HOME=/var/www
 cd /var/www/laravel
 [ $# -eq 0 ] || sudo -E -u www-data -g www-data $@
