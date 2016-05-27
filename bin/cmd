@@ -1,3 +1,4 @@
 #!/bin/bash
+source /env
 cd /var/www/laravel
 [ $# -eq 0 ] || sudo -E -u www-data -g www-data $@
