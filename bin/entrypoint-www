@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 HOME=/var/www
 cd /var/www
 source /env
