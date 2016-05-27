@@ -16,17 +16,7 @@ echo ----------------------------------------
 fi
 
 # Check if data is not initialized yet
-if [ ! -d /var/www/laravel ] ; then
-    if [ -z $GIT_REPO ] ; then
-        # Just ensure directory existance
-        echo "GIT_REPO is not set!"
-        mkdir -p /var/www/laravel
-    else
-    	# Clone project
-        echo "Cloning git repo..."
-    	yes | GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no' git clone --recursive $GIT_REPO /var/www/laravel
-    fi
-fi	
+cd /var/www/laravel && git pull || yes | GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no' git clone --recursive $GIT_REPO /var/www/laravel
 
 # Webhook
 mkdir -p /var/www/laravel/public && \
