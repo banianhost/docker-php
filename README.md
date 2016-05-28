@@ -10,11 +10,11 @@ Laas is developed under inspiration of [Laravel Forge](https://forge.laravel.com
 - All Data is independent of container, just delete and create an new one any time you want.
 - Powered by **Nginx**, **PHP7-FPM** on latest **Ubuntu**.
 - **Webhooks** are ready ! Just push and commit your changes and your site is up!
-- PHP **Mongo** extension compiled.
+- PHP **Mongo** extension.
 - **SSH-Keys** are auto-generated for git access.
 - Very **Light**, no database running inside container.
-- **NEW::** Gulp super ready, just edit your gulp file, gulp watch is always running!
-- **NEW::** V8js Extention 
+- **Gulp** installed, just exec `cmd gulp` from container
+- PHP **v8Js** Extention 
 
 # Webhook
 
@@ -28,7 +28,7 @@ You can use exec + `cmd` command to run commands inside laravel project like :
 
 # Quick Start
 
-## Simple Docker-Compose :
+## Simple Docker-Compose
 
 ```yaml
 version: '2'
@@ -46,7 +46,7 @@ services:
     network_mode: "bridge"
 ```
 
-## Alternative Docker-Copose:   
+## Alternative Docker-Copose:  
 You can also create a docker compose inside your laravel repository and mount project to `/var/www/laravel`
    
 docker-compose.yaml:
@@ -73,4 +73,5 @@ WEBHOOK_SECRET=123
 .gitingnore:
 ```
 /.laas*
+public/webhook.php
 ```

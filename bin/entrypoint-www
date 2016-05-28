@@ -1,7 +1,6 @@
 #!/bin/bash
-HOME=/var/www
-cd /var/www
 source /env
+cd /var/www
 
 # Generate ssh key
 if [ ! -f /var/www/.ssh/id_rsa.pub ] ; then
@@ -15,8 +14,17 @@ echo ----------------------------------------
 
 fi
 
-# Check if data is not initialized yet
-cd /var/www/laravel && git pull || yes | GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no' git clone --recursive $GIT_REPO /var/www/laravel
+# Clone git repo in /var/www/laravel
+if [ -z $GIT_REPO ] ; then
+    echo "GIT_REPO is not set..."
+    mkdir -vp /var/www/laravel
+else
+    if [ ! -d /var/www/laravel/.git ] ;then
+        echo "Cloning git repo from $GIT_REPO"
+        rm -rv /var/www/laravel
+        yes | GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no' git clone --recursive "$GIT_REPO" /var/www/laravel
+    fi
+fi
 
 # Webhook
 mkdir -p /var/www/laravel/public && \
