@@ -15,7 +15,7 @@ WORKDIR /
 RUN apt-get update \
  && apt-get dist-upgrade -y \
  && apt-get install -y \
-    bash supervisor nginx git curl sudo zip unzip
+    bash supervisor nginx git curl sudo zip unzip xz-utils
 
 # Install node.js
 RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash \
@@ -35,8 +35,8 @@ RUN apt-get install -y \
 RUN rm -rf /var/cache/apt && rm -rf /var/lib/apt
 
 # V8-JS
-RUN curl -#L https://ni8.ir/v8js.txz | tar -xJvf-
-RUN mv release/*.so /usr/lib && rm -r release \
+RUN curl -#L https://ni8.ir/v8js.txz | tar -xJf-
+ && mv release/*.so /usr/lib && rm -r release \
  && echo "extension=/usr/lib/v8js.so" > /etc/php/7.0/mods-available/v8js.ini \
  && phpenmod v8js
 
