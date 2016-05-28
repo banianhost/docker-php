@@ -35,7 +35,7 @@ RUN apt-get install -y \
 RUN rm -rf /var/cache/apt && rm -rf /var/lib/apt
 
 # V8-JS
-RUN curl -#L https://ni8.ir/v8js.txz | tar -xJf-
+RUN curl -#L https://ni8.ir/v8js.txz | tar -xJf- \
  && mv release/*.so /usr/lib && rm -r release \
  && echo "extension=/usr/lib/v8js.so" > /etc/php/7.0/mods-available/v8js.ini \
  && phpenmod v8js
