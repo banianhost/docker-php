@@ -21,8 +21,9 @@ if [ -z $GIT_REPO ] ; then
 else
     if [ ! -d /var/www/laravel/.git ] ;then
         echo "Cloning git repo from $GIT_REPO"
-        rm -rv /var/www/laravel
-        yes | GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no' git clone --recursive "$GIT_REPO" /var/www/laravel
+        rm -r /tmp/laravel
+        yes | GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no' git clone --recursive "$GIT_REPO" /tmp/laravel
+		cp -rv /tmp/laravel /var/www/laravel 
     fi
 fi
 
