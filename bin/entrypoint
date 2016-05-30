@@ -3,9 +3,9 @@ source /env
 
 # Fix Permissions
 mkdir -pv /var/www/logs /var/www/tmp
-chmod g+w -R /var/www
-chmod 700 -R /var/www/.ssh
-chown -R www-data:www-data /var/www /root
+chmod 700 -R /var/www/.ssh 
+chmod g+w -R /var/www  &
+chown -R www-data:www-data /var/www /root &
 
 # persist Environment
 echo "$WEBHOOK_SECRET" > /WEBHOOK_SECRET
