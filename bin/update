@@ -35,10 +35,6 @@ if [ -f .webhookrc ] ; then
 	/bin/bash -c /var/www/src/.webhookrc
 fi
 
-# .env
-# TODO: (FIXME) merge and handle duplicates
-cat /env >> .env
-
 ## Site UP
 if [ -f artisan ] ; then
     php artisan up
