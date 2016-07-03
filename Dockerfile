@@ -35,7 +35,10 @@ RUN rm -rf /var/cache/apt && rm -rf /var/lib/apt
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | \
-    php -- --install-dir=/usr/bin --filename=composer 
+    php -- --install-dir=/usr/bin --filename=composer
+
+# Permissions
+RUN chown www-data:www-data -R /root
 
 # PHP-FPM
 RUN mkdir -p /run/php

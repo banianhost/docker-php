@@ -1,0 +1,9 @@
+#!/bin/bash
+   
+# Fix Permissions
+mkdir -p /var/www/logs /var/www/tmp /var/www/.ssh
+chmod 700 -R /var/www/.ssh 
+chown www-data:www-data -R /var/www/.ssh 
+
+# Working on src may take a long time so do it in background
+chown -R :www-data /var/www/src &

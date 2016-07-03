@@ -7,11 +7,7 @@ if [ ! $# -eq 0 ] ; then
 fi
    
 # Fix Permissions
-mkdir -p /var/www/logs /var/www/tmp /var/www/.ssh
-chmod g+w -R /var/www
-chmod 700 -R /var/www/.ssh 
-## chown may take long time so do it in background
-chown -R www-data /var/www /root &
+/fixperm
 
 # persist Environment
 echo "$WEBHOOK_SECRET" > /WEBHOOK_SECRET
