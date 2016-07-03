@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -t pooya/laas -f Dockerfile .
+docker build -t pooya/paas -f Dockerfile .
