@@ -1,5 +1,4 @@
 #!/bin/bash
-source /env
 
 # Fix Permissions
 mkdir -pv /var/www/logs /var/www/tmp
@@ -12,10 +11,11 @@ echo "$WEBHOOK_SECRET" > /WEBHOOK_SECRET
 echo `env` > /env
 
 if [ $# -eq 0 ] ; then
-    # Start supervisord
-    /usr/bin/supervisord -c /etc/supervisord.conf 
     # Start www-data entrypoint and fork
     sudo -E -u www-data -g www-data /entrypoint-www $@ &
+
+    # Start supervisord
+    /usr/bin/supervisord -c /etc/supervisord.conf 
 else
     # Run user cmd
     /cmd $@
