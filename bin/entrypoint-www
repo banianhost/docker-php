@@ -32,14 +32,13 @@ else
         yes | GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no' git clone --recursive "$GIT_REPO" /tmp/src
 		cp -rv /tmp/src ~
         rm -r /tmp/src
-
-        # Execute update
-        update
-
         # TODO
         # cat /env >> .env
     fi
 fi
+
+# Execute update
+update
 
 ## Ensure Site is up
 pushd src
@@ -48,7 +47,6 @@ if [ -f artisan ] ; then
     echo "Artisan Up!"
 fi
 popd
-
 
 # Webhook
 if [ -d src/public ] ; then
