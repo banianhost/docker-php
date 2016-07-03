@@ -14,6 +14,11 @@ echo ----------------------------------------
 
 fi
 
+# Remove lock file
+if [ -f .paas.lock ] ; then
+	rm .paas.lock
+fi
+
 # Clone git repo
 if [ -z $GIT_REPO ] ; then
     echo "GIT_REPO is not set..."
@@ -26,6 +31,10 @@ else
 		cp -rv /tmp/src ~
         rm -r /tmp/src
     fi
+
+    # Execute update
+    echo "Executing update script"
+    /update
 fi
 
 # Webhook
@@ -37,11 +46,5 @@ fi
 
 ln -fs /webhook.php /var/www/src/public
 
-# Remove lock file
-if [ -f /var/www/src/.paas.lock ] ; then
-	rm /var/www/src/.paas.lock
-fi
-
-# Execute cmd
-echo "Executing update script..."
-/update
+# Tail logs to stdout
+tail -f /var/www/logs/*

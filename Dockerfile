@@ -39,6 +39,7 @@ RUN curl -sS https://getcomposer.org/installer | \
 
 # PHP-FPM
 RUN mkdir -p /run/php
+COPY conf/www.conf /etc/php/7.0/fpm/pool.d/www.conf
 
 # Nginx
 COPY conf/nginx.conf /etc/nginx/nginx.conf
