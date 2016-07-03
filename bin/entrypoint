@@ -3,16 +3,20 @@ source /env
 
 # Fix Permissions
 mkdir -pv /var/www/logs /var/www/tmp
+chmod g+w -R /var/www
 chmod 700 -R /var/www/.ssh 
-chmod g+w -R /var/www  &
-chown -R www-data:www-data /var/www /root &
+chown -R www-data:www-data /var/www /root
 
 # persist Environment
 echo "$WEBHOOK_SECRET" > /WEBHOOK_SECRET
 echo `env` > /env
 
-# Start www-data entrypoint and fork
-sudo -E -u www-data -g www-data /entrypoint-www $@ &
-
-# Start supervisord
-[ $# -eq 0 ] && /usr/bin/supervisord -c /etc/supervisord.conf
+if [ $# -eq 0 ] ; then
+    # Start supervisord
+    /usr/bin/supervisord -c /etc/supervisord.conf 
+    # Start www-data entrypoint and fork
+    sudo -E -u www-data -g www-data /entrypoint-www $@ &
+else
+    # Run user cmd
+    /cmd $@
+fi

@@ -1,43 +1,47 @@
 #!/bin/bash
-HOME=/var/www
-cd /var/www/laravel
 source /env
+HOME=/var/www
+cd /var/www/src
 
 ## LOCK
-if [ -f .laas.lock ] ; then
+if [ -f .paas.lock ] ; then
 	echo "Lock file '.laas.lock' exists, it seems it is already updating ..."
 	exit 1
 fi
-touch .laas.lock
+touch .paas.lock
 
-# Set website to maintnance mode
-php artisan down
-echo "Artisan down!"
+# Set website to maintnance mode (laravel only)
+if [ -f artisan ] ; then
+    php artisan down
+    echo "Artisan down!"
+fi
 
 # Do real update
-echo "Pulling git repo..."
-git pull
-echo "--------------------------------------"
+if [ -f .git ] ; then
+    echo "Pulling git repo..."
+    git pull
+fi
 
 # Composer
-echo "Installing composer dependencies..."
-composer install --prefer-source --no-ansi --no-interaction --no-progress --optimize-autoloader
-echo "--------------------------------------"
+if [ -f composer.json ] ; then
+    echo "Installing composer dependencies..."
+    composer install --prefer-source --no-ansi --no-interaction --no-progress --optimize-autoloader
+fi
 
 # .webhookrc file
-if [ -f /var/www/laravel/.webhookrc ] ; then
-	/bin/bash -c /var/www/laravel/.webhookrc
+if [ -f .webhookrc ] ; then
+	/bin/bash -c /var/www/src/.webhookrc
 fi
 
-# Init
-if [ ! -e .env ] ; then
-  echo "**Installing default .env file**"
-  cp -v .env.example .env
-fi
+# .env
+# TODO: (FIXME) merge and handle duplicates
+cat /env >> .env
 
 ## Site UP
-php artisan up
-echo "Artisan Up!"
+if [ -f artisan ] ; then
+    php artisan up
+    echo "Artisan Up!"
+fi
 
 ## LOCK
-rm .laas.lock
+rm .paas.lock

@@ -6,7 +6,7 @@ server {
     server_name _;
 
     # The location of our projects public directory.
-    root            /var/www/laravel/public;
+    root            /var/www/src/public;
 
     # Index	
     index index.php index.html;

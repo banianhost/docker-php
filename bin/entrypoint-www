@@ -3,43 +3,45 @@ source /env
 cd /var/www
 
 # Generate ssh key
-if [ ! -f /var/www/.ssh/id_rsa.pub ] ; then
- echo -e "\n\n\n" | ssh-keygen -t rsa -N "" -f /var/www/.ssh/id_rsa -q
+if [ ! -f .ssh/id_rsa.pub ] ; then
+ echo -e "\n\n\n" | ssh-keygen -t rsa -N "" -f .ssh/id_rsa -q
 
 echo ----------------------------------------
  echo Public SSH Key is :
  echo ----------------------------------------
- cat /var/www/.ssh/id_rsa.pub
+ cat .ssh/id_rsa.pub
 echo ----------------------------------------
 
 fi
 
-# Clone git repo in /var/www/laravel
+# Clone git repo
 if [ -z $GIT_REPO ] ; then
     echo "GIT_REPO is not set..."
-    mkdir -vp /var/www/laravel
+    mkdir -vp src
 else
-    if [ ! -d /var/www/laravel/.git ] ;then
+    if [ ! -d src/.git ] ;then
         echo "Cloning git repo from $GIT_REPO"
-        rm -r /tmp/laravel
-        yes | GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no' git clone --recursive "$GIT_REPO" /tmp/laravel
-		cp -rv /tmp/laravel /var/www/laravel 
+        rm -r /tmp/src
+        yes | GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no' git clone --recursive "$GIT_REPO" /tmp/src
+		cp -rv /tmp/src ~
+        rm -r /tmp/src
     fi
 fi
 
 # Webhook
-mkdir -p /var/www/laravel/public && \
+if [ -d src/public ] ; then
+    mkdir -p src/public
+else
+    ln -sv /var/www/src /var/www/src/public
+fi
+
 ln -fs /webhook.php /var/www/laravel/public
 
 # Remove lock file
-if [ -f /var/www/laravel/.laas.lock ] ; then
-	rm /var/www/laravel/.laas.lock
+if [ -f /var/www/src/.paas.lock ] ; then
+	rm /var/www/src/.paas.lock
 fi
 
 # Execute cmd
-if [ $# -eq 0 ] ; then
-    echo "Executing update script..."
-    /update
-else
-    $@
-fi
+echo "Executing update script..."
+/update
