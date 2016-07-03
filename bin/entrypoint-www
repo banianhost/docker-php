@@ -35,7 +35,7 @@ else
     ln -sv /var/www/src /var/www/src/public
 fi
 
-ln -fs /webhook.php /var/www/laravel/public
+ln -fs /webhook.php /var/www/src/public
 
 # Remove lock file
 if [ -f /var/www/src/.paas.lock ] ; then
