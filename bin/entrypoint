@@ -1,20 +1,25 @@
 #!/bin/bash
 
 if [ ! $# -eq 0 ] ; then
-     # Run user cmd
-    /cmd $@
+    cmd $@ 
     exit
 fi
-   
-# Fix Permissions
-/fixperm
 
-# persist Environment
+# 
+echo "Initializing paas"
+
+# Fix Permissions
+fixperm
+
+# Persist Environment
 echo "$WEBHOOK_SECRET" > /WEBHOOK_SECRET
 echo `env` > /env
 
+# Monitor Logs
+logs &
+
 # Start www-data entrypoint and fork
-sudo -E -u www-data -g www-data /entrypoint-www $@ &
+sudo -E -u www-data -g www-data entrypoint-www &
 
 # Start supervisord
 echo "Starting supervisord"

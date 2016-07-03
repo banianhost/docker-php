@@ -2,6 +2,8 @@
 source /env
 cd /var/www
 
+echo "Initializing www"
+
 # Generate ssh key
 if [ ! -f .ssh/id_rsa.pub ] ; then
  echo -e "\n\n\n" | ssh-keygen -t rsa -N "" -f .ssh/id_rsa -q
@@ -21,7 +23,7 @@ fi
 
 # Clone git repo
 if [ -z $GIT_REPO ] ; then
-    echo "GIT_REPO is not set..."
+    echo "GIT_REPO is not set!"
     mkdir -vp src
 else
     if [ ! -d src/.git ] ;then
@@ -33,8 +35,7 @@ else
     fi
 
     # Execute update
-    echo "Executing update script"
-    /update
+    update
 fi
 
 # Webhook
@@ -45,6 +46,3 @@ else
 fi
 
 ln -fs /webhook.php /var/www/src/public
-
-# Tail logs to stdout
-tail -f /var/www/logs/*

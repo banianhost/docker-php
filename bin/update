@@ -3,6 +3,8 @@ source /env
 HOME=/var/www
 cd /var/www/src
 
+echo "Running update script"
+
 ## LOCK
 if [ -f .paas.lock ] ; then
 	echo "Lock file '.laas.lock' exists, it seems it is already updating ..."

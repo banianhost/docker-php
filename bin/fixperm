@@ -1,5 +1,7 @@
 #!/bin/bash
-   
+
+echo "Fixing permissions"
+
 # Fix Permissions
 mkdir -p /var/www/logs /var/www/tmp /var/www/.ssh
 chmod 700 -R /var/www/.ssh 

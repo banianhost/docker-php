@@ -51,11 +51,11 @@ COPY conf/nginx-default /etc/nginx/conf.d/default.conf
 # www-data user
 RUN mkdir -p /var/www && chown -R www-data:www-data /var/www && \
     ln -s /var/www/ /home/www-data
+
 # Supedvisord
 COPY  conf/supervisord.conf /etc/supervisord.conf
 
-#Bin
-COPY bin /
-RUN ln -s /cmd /bin/ && chmod +x /cmd && chmod +x /bin/cmd
+# Bin
+COPY bin /bin
 
-ENTRYPOINT ["/entrypoint"]
+ENTRYPOINT ["entrypoint"]

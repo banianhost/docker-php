@@ -27,8 +27,8 @@ As we follow laravel standards, your project should have a directory named ```pu
 
 # Running commands
 
-You can use sipmy execute commands to run commands inside project like :
-``` php exec -it <container_name> php artisan help ```
+You can use sipmy execute ```cmd``` command to run commands inside project like :
+``` php exec -it <container_name> cmd php artisan help ```
 
 # Quick Start
 
