@@ -14,7 +14,7 @@ paas is developed under inspiration of [Laravel Forge](https://forge.laravel.com
 - **Webhooks** are ready ! Just push and commit your changes and your site is up!
 - PHP **Mongo** extension.
 - **SSH-Keys** are auto-generated for git access.
-- **Node js 7.0** & **Gulp** installed, just exec `gulp` from container
+- **Nodejs** & **Gulp** installed, just exec `gulp` from container
 
 # Webhook
 
@@ -42,7 +42,7 @@ services:
     volumes:
       - ./data/www:/var/www
     environment:
-      -  VIRTUAL_HOST=my.subdomain.tld,butterfly.my.subdomain.dld
+      -  VIRTUAL_HOST=my.subdomain.com
       -  GIT_REPO=https://github.com/some/repo.git
       -  PASSWORD=www-data_password
       -  WEBHOOK_SECRET=123

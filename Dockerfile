@@ -17,7 +17,7 @@ RUN apt-get update \
     bash supervisor nginx git curl sudo zip unzip xz-utils
 
 # Install node.js
-RUN curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash \
+RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash \
  && apt-get install -y nodejs
 
 # gulp-cli
