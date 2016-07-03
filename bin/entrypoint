@@ -1,22 +1,25 @@
 #!/bin/bash
 
+if [ ! $# -eq 0 ] ; then
+     # Run user cmd
+    /cmd $@
+    exit
+fi
+   
 # Fix Permissions
-mkdir -pv /var/www/logs /var/www/tmp /var/www/.ssh
+mkdir -p /var/www/logs /var/www/tmp /var/www/.ssh
 chmod g+w -R /var/www
 chmod 700 -R /var/www/.ssh 
-chown -R www-data:www-data /var/www /root
+## chown may take long time so do it in background
+chown -R www-data /var/www /root &
 
 # persist Environment
 echo "$WEBHOOK_SECRET" > /WEBHOOK_SECRET
 echo `env` > /env
 
-if [ $# -eq 0 ] ; then
-    # Start www-data entrypoint and fork
-    sudo -E -u www-data -g www-data /entrypoint-www $@ &
+# Start www-data entrypoint and fork
+sudo -E -u www-data -g www-data /entrypoint-www $@ &
 
-    # Start supervisord
-    /usr/bin/supervisord -c /etc/supervisord.conf 
-else
-    # Run user cmd
-    /cmd $@
-fi
+# Start supervisord
+echo "Starting supervisord"
+/usr/bin/supervisord -c /etc/supervisord.conf 
