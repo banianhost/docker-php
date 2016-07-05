@@ -1,19 +1,25 @@
 #!/bin/bash
 
+# Save Environment
+if [ ! -f /WEBHOOK_SECRET ] ; then
+    echo "$WEBHOOK_SECRET" > /WEBHOOK_SECRET
+fi
+
+if [ ! -f /env ] ; then
+    echo `env` >> /env
+fi
+
+# Run CMD
 if [ ! $# -eq 0 ] ; then
     cmd $@ 
     exit
 fi
 
-# 
-echo "Initializing paas"
+# Start Boot 
+echo "Booting paas"
 
 # Fix Permissions
 fixperm
-
-# Persist Environment
-echo "$WEBHOOK_SECRET" > /WEBHOOK_SECRET
-echo `env` > /env
 
 # Monitor Logs
 logs &

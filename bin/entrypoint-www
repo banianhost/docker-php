@@ -1,6 +1,6 @@
 #!/bin/bash
-source /env
-cd /var/www
+[ -f /env ] && source /env
+[ -f /var/www ] && cd /var/www || mkdir -pv /var/www
 
 echo "Initializing www"
 

@@ -1,4 +1,5 @@
 #!/bin/bash
-source /env
-cd /var/www/src
+[ -f /env ] && source /env
+[ -f /var/www/src ] && cd /var/www/src || mkdir -pv /var/www/src
+
 [ $# -eq 0 ] || sudo -E -u www-data -g www-data $@

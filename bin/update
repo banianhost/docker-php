@@ -1,7 +1,6 @@
 #!/bin/bash
-source /env
-HOME=/var/www
-cd /var/www/src
+[ -f /env ] && source /env
+[ -f /var/www/src ] && cd /var/www/src || mkdir -p /var/www/src
 
 echo "Running update script"
 
