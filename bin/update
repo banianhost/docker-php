@@ -1,12 +1,13 @@
 #!/bin/bash
 [ -f /env ] && source /env
-[ -f /var/www/src ] && cd /var/www/src || mkdir -p /var/www/src
+[ ! -f /var/www/src ] && mkdir -pv /var/www/src
+cd /var/www/src 
 
 echo "Running update script"
 
 ## LOCK
 if [ -f .paas.lock ] ; then
-	echo "Lock file '.laas.lock' exists, it seems it is already updating ..."
+	echo "Lock file '.paas.lock' exists, it seems it is already updating ..."
 	exit 1
 fi
 touch .paas.lock
@@ -18,7 +19,7 @@ if [ -f artisan ] ; then
 fi
 
 # Do real update
-if [ -f .git ] ; then
+if [ -d .git ] ; then
     echo "Pulling git repo..."
     git pull
 fi

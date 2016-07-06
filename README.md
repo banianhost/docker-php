@@ -23,7 +23,7 @@ if you want to add custom commands, create a `.webhookrc` script in root of your
 
 # Project Structure
 
-As we follow laravel standards, your project should have a directory named ```public```, if it does not exists, init script **will automaticly create a syslink from source to public**.
+Your project should have a directory named ```public```.
 
 # Running commands
 

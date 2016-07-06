@@ -1,6 +1,7 @@
 #!/bin/bash
 [ -f /env ] && source /env
-[ -f /var/www ] && cd /var/www || mkdir -pv /var/www
+[ ! -f /var/www/src ] && mkdir -pv /var/www/src
+cd /var/www
 
 echo "Initializing www"
 
@@ -32,9 +33,7 @@ else
         yes | GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no' git clone --recursive "$GIT_REPO" /tmp/src
 		cp -rv /tmp/src ~
         rm -r /tmp/src
-        # TODO
-        # cat /env >> .env
-    fi
+   fi
 fi
 
 # Execute update
@@ -49,10 +48,4 @@ fi
 popd
 
 # Webhook
-if [ -d src/public ] ; then
-    mkdir -p src/public
-else
-    ln -sv /var/www/src /var/www/src/public
-fi
-
-ln -fs /webhook.php /var/www/src/public
+ln -fs /bin/webhook.php /var/www/src/public
