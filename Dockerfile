@@ -20,7 +20,7 @@ RUN apt-get install -y \
     php php-apcu php-bz2 php-cache php-cli php-curl php-fpm php-gd php-geoip \
     php-gettext php-gmp php-imagick php-imap php-json php-mcrypt php-mbstring php-zip \
     php-memcached php-mongodb php-mysql php-pear php-redis php-xml php-intl php-soap \
-    php-sqlite3 php-dompdf php-fpdf php-guzzlehttp php-guzzlehttp-psr7 php-jwt  php-ssh2 
+    php-sqlite3 php-dompdf php-fpdf php-guzzlehttp php-guzzlehttp-psr7 php-jwt  php-ssh2 php-bcmath
 
 # Install node.js
 RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash \
