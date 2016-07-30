@@ -12,12 +12,6 @@ if [ -f .paas.lock ] ; then
 fi
 touch .paas.lock
 
-# Set website to maintnance mode (laravel only)
-if [ -f artisan ] ; then
-    php artisan down
-    echo "Artisan down!"
-fi
-
 # Do real update
 if [ -d .git ] ; then
     echo "Pulling git repo..."
@@ -33,12 +27,6 @@ fi
 # .webhookrc file
 if [ -f .webhookrc ] ; then
 	/bin/bash -c /var/www/src/.webhookrc
-fi
-
-## Site UP
-if [ -f artisan ] ; then
-    php artisan up
-    echo "Artisan Up!"
 fi
 
 ## LOCK
