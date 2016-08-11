@@ -57,4 +57,5 @@ COPY conf/supervisord.conf /etc/supervisord.conf
 # Bin
 COPY bin /bin
 
+VOLUME /var/www
 ENTRYPOINT ["entrypoint"]
