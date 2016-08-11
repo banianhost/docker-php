@@ -21,6 +21,10 @@ paas is developed under inspiration of [Laravel Forge](https://forge.laravel.com
 Simply set `WEBHOOK_SECRET` environemnt and use injected url `http://project_url/webhook.php?secret=123` to use webhook.   
 if you want to add custom commands, create a `.webhookrc` script in root of your repository.  
 
+# Branch
+
+You can change git branch by using environment variable `GIT_BRANCH`. branch will be changed after next update or container entry-point.
+
 # Project Structure
 
 Your project should have a directory named `public`.
