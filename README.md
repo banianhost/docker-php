@@ -18,7 +18,7 @@ paas is developed under inspiration of [Laravel Forge](https://forge.laravel.com
 
 # Vendor Script
 
-If you are making a custom images based on `paas` you can copy your init script to `/vendor` so it will be executed at every update.
+If you are making a custom images based on paas you can copy your init script to `/bin/vendor` so it will be executed at every update.
 
 # Webhook
 
