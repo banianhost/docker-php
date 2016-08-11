@@ -17,11 +17,6 @@ echo ----------------------------------------
 
 fi
 
-# Remove lock file
-if [ -f .paas.lock ] ; then
-	rm .paas.lock
-fi
-
 # Clone git repo
 if [ -z $GIT_REPO ] ; then
     echo "GIT_REPO is not set!"
@@ -34,6 +29,11 @@ else
 		cp -rv /tmp/src ~
         rm -r /tmp/src
    fi
+fi
+
+# Remove lock file
+if [ -f src/.paas.lock ] ; then
+	rm src/.paas.lock
 fi
 
 # Execute update
