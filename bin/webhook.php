@@ -8,9 +8,10 @@ $secret=null;
 
 echo "Starting Update\n";
 
+echo "..."
 echo exec('/bin/update > /var/www/logs/webhook.log 2>&1');
 echo file_get_contents('/var/www/logs/webhook.log');
 
-echo "Update Done\n";
+echo "Update Done!\n";
 
 echo "</pre>";
