@@ -18,10 +18,7 @@ echo ----------------------------------------
 fi
 
 # Clone git repo
-if [ -z $GIT_REPO ] ; then
-    echo "GIT_REPO is not set!"
-    mkdir -vp src
-else
+if ! [ -z $GIT_REPO ] ; then
     if [ ! -d src/.git ] ;then
         echo "Cloning git repo from $GIT_REPO"
         rm -r /tmp/src
@@ -30,6 +27,9 @@ else
         rm -r /tmp/src
    fi
 fi
+
+# Ensure public directory exists
+mkdir -vp src/public
 
 # Remove lock file
 if [ -f src/.paas.lock ] ; then
