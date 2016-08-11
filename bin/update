@@ -15,8 +15,8 @@ touch .paas.lock
 # Do real update
 if [ -d .git ] ; then
     echo "Pulling git repo..."
-    git pull
     git reset --hard
+    git pull
 
     if ! [ -z $GIT_BRANCH ] ; then
         git checkout $GIT_BRANCH
