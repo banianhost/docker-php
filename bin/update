@@ -16,6 +16,7 @@ touch .paas.lock
 if [ -d .git ] ; then
     echo "Pulling git repo..."
     git pull
+    git reset --hard
 fi
 
 # Composer
