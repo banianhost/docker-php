@@ -24,6 +24,11 @@ if [ -f composer.json ] ; then
     composer install --prefer-source --no-ansi --no-interaction --no-progress --optimize-autoloader
 fi
 
+# vendor script
+if [ -f /vendor ] ; then
+	/bin/bash -c /vendor
+fi
+
 # .webhookrc file
 if [ -f .webhookrc ] ; then
 	/bin/bash -c /var/www/src/.webhookrc

@@ -16,6 +16,10 @@ paas is developed under inspiration of [Laravel Forge](https://forge.laravel.com
 - **SSH-Keys** are auto-generated for git access.
 - **Nodejs** & **Gulp** installed, just exec `gulp` from container
 
+# Vendor Script
+
+If you are making a custom images based on `paas` you can copy your init script to `/vendor` so it will be executed at every update.
+
 # Webhook
 
 Simply set `WEBHOOK_SECRET` environemnt and use injected url `http://project_url/webhook.php?secret=123` to use webhook.   
