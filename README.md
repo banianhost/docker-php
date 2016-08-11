@@ -1,6 +1,6 @@
+[![Docker Pulls](https://img.shields.io/docker/pulls/pooya/paas.svg)](https://hub.docker.com/r/pooya/paas)
 [![Docker Repository on Quay](https://quay.io/repository/pooya/paas/status "Docker Repository on Quay")](https://quay.io/repository/pooya/paas)
-[![](https://badge.imagelayers.io/pooya/paas:latest.svg)](https://imagelayers.io/?images=pooya/paas:latest 'Get your own badge on imagelayers.io')
-
+[![GitHub stars](https://img.shields.io/github/stars/pi0/paas.svg?style=social&label=Star&?style=flat-square)](https://github.com/pi0/paas)
 
 # Paas (PHP as a service )
 Painless and automated any PHP Project docker instances hosting and deployment.   
@@ -16,10 +16,6 @@ paas is developed under inspiration of [Laravel Forge](https://forge.laravel.com
 - **SSH-Keys** are auto-generated for git access.
 - **Nodejs** & **Gulp** installed, just exec `gulp` from container
 
-# Vendor Script
-
-If you are making a custom images based on paas you can copy your init script to `/bin/vendor` so it will be executed at every update.
-
 # Webhook
 
 Simply set `WEBHOOK_SECRET` environemnt and use injected url `http://project_url/webhook.php?secret=123` to use webhook.   
@@ -27,12 +23,32 @@ if you want to add custom commands, create a `.webhookrc` script in root of your
 
 # Project Structure
 
-Your project should have a directory named ```public```.
+Your project should have a directory named `public`.
 
 # Running commands
 
-You can use sipmy execute ```cmd``` command to run commands inside project like :
-``` php exec -it <container_name> cmd php artisan help ```
+You can use sipmy execute `cmd` command to run commands inside project like :
+` php exec -it [containerName] cmd php artisan help `
+
+# Building images based on paas
+
+## Vendor Script
+You can copy your init script to `/bin/vendor` so it will be executed at every update.
+
+## Supervisord
+Supervisord includes are supported. if you have any daemon to run with your image just copy config files to `/etc/supervisor/conf.d`
+
+### Example : Cronjob support
+This example will add Cron Jobs Support to Image. 
+`/etc/supervisor/conf.d/cron.conf` :
+  
+```ini
+[program:cron]
+command = /usr/sbin/cron -f -L 15
+stdout_logfile  = /var/log/cron.log
+stderr_logfile  = /var/log/cron.log
+autorestart=true
+```
 
 # Quick Start
 
@@ -70,10 +86,10 @@ services:
     restart: always
 ```
    
-# Git Ignores
-To prevent confilctes, ignore generated files:
-  
-.gitingnore:
+# Tips
+
+To prevent confilctes and pushing lock files in your dev environment, ignore generated files.
+`.gitingnore`:
 ```
 .paas.lock
 public/webhook.php
