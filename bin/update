@@ -13,6 +13,7 @@ fi
 touch .paas.lock
 
 # Do real update
+if ! [ -z $GIT_REPO ] ; then
 if [ -d .git ] ; then
     echo "Pulling git repo..."
     git reset --hard
@@ -22,6 +23,7 @@ if [ -d .git ] ; then
         git checkout $GIT_BRANCH
     fi
 
+fi
 fi
 
 # Composer
