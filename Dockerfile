@@ -26,6 +26,10 @@ RUN apt-get install -y \
 RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash \
  && apt-get install -y nodejs
 
+# Install Additional Packages
+RUN apt-get install -y \
+    libxrender1
+
 # gulp-cli
 RUN npm install --global gulp-cli 
 
