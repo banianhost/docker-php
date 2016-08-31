@@ -46,6 +46,7 @@ RUN chown www-data:www-data -R /root
 # PHP-FPM
 RUN mkdir -p /run/php
 COPY conf/www.conf /etc/php/7.0/fpm/pool.d/www.conf
+COPY conf/php.ini /etc/php/7.0/fpm/php.ini
 
 # Nginx
 COPY conf/nginx.conf /etc/nginx/nginx.conf
