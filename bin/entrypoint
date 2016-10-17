@@ -6,7 +6,7 @@ if [ ! -f /WEBHOOK_SECRET ] ; then
 fi
 
 # Load ENV
-env | sed 's/\([^=]*\)=\(.*\)/export "\1"="\2"/g' > /bin/load_env
+env | sed 's/\([^=]*\)=\(.*\)/\1="\2"/g' > /bin/load_env
 chmod +x /bin/load_env
 
 # Run CMD

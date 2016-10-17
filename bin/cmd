@@ -1,5 +1,5 @@
 #!/bin/bash
-load_env 2>null
+source load_env 2>null
 [ ! -f /var/www/src ] && mkdir -pv /var/www/src
 cd /var/www/src
 
