@@ -43,7 +43,7 @@ You should mount project under `/var/www/src` if you have a `public/` directory 
 
 All logs are stored under `/var/www/logs`.
 
-## Scripts
+## Commands
 
 ### `fixperms`
 
