@@ -6,6 +6,7 @@ ENV HOME=/var/www \
     TERM=xterm \
     SHELL=bash \
     DEBIAN_FRONTEND=noninteractive \
+    NODE_ENV=production \
     PHP_VERSION=7.2
 
 EXPOSE 80
