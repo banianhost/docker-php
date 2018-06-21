@@ -16,9 +16,9 @@ if [ -f composer.json ] ; then
     composer install --prefer-source --no-ansi --no-interaction --no-progress --optimize-autoloader
 fi
 
-# vendor script
-if [ -f /bin/vendor ] ; then
-	/bin/bash -c /bin/vendor
+# update script
+if [ -f /bin/update ] ; then
+	/bin/bash -c /bin/update
 fi
 
 ## LOCK
