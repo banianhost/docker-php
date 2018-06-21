@@ -37,12 +37,11 @@ services:
     restart: always
 ```
 
+## Directories
 
-## Project Structure
+You should mount project under `/var/www/src` if you have a `public/` directory (Most of frameworks, including **Laravel**) Otherwise you can simply mount it under `/var/www/src/public`.
 
-You should mount project under `/var/www/src` if you have a `public/` directory (Most of frameworks, including **Laravel**)
-
-Otherwise you can simply mount it under `/var/www/src/public`.
+All logs are stored under `/var/www/logs`.
 
 ## Scripts
 
@@ -50,7 +49,7 @@ Otherwise you can simply mount it under `/var/www/src/public`.
 
 This script sets correct ownership for www and log files. For faster startup, fixing `/var/www/src` will be done in background.
 
-### logs`
+### `logs`
 
 Tails all PHP and Nginx logs.
 
@@ -62,11 +61,11 @@ Useful for running commands as `www-data` inside project.
 
 ### `update`
 
-- Run `composer install` and `yarn install` if derectedd. A lock file `/var/www/update.lock` will be created to prevent running more than once.
+- Run `composer install` and `yarn install` if detected. A lock file `/var/www/update.lock` will be created to prevent running more than once.
 
 ## Supervisord
 
-If you have any daemon to run with your project just copy add config files into `/etc/supervisor/conf.d`
+If you have any daemon to run with your project just add config files into `/etc/supervisor/conf.d`
 
 **Example:** Cronjob support
 
