@@ -1,10 +1,12 @@
 #!/bin/bash
 
-# Fix permissions
-chown www-data:www-data -R \
-  /var/www/logs \
-  /var/www/tmp \
-  /var/www/.composer
+DIRS="/var/www/logs /var/www/tmp /var/www/.composer"
 
+# Ensure directories existence
+mkdir -p $DIRS
+
+# Fix permissions
+chown -R www-data:www-data $DIRS
+  
 # Working on src may take a long time so do it in background
 chown -R www-data:www-data /var/www/src &
