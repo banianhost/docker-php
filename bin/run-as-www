@@ -1,5 +1,3 @@
 #!/bin/bash
 
-cd /var/www/src
-
-[ $# -eq 0 ] || sudo -E -u www-data -g www-data $@
+sudo -E -u www-data -g www-data $@
