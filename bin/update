@@ -1,25 +1,24 @@
 #!/bin/bash
 
-[ ! -f /var/www/src ] && mkdir -p /var/www/src
-
-cd /var/www/src 
-
-## LOCK
-if [ -f .update.lock ] ; then
-	echo "Lock file '.update.lock' exists, it seems it is already updating ..."
+# Start
+if [ -f /var/www/update.lock ] ; then
+	echo "Lock file 'update.lock' exists, it seems it is already updating ..."
 	exit 1
 fi
-touch .update.lock
+
+touch /var/www/update.lock
+
+cd /var/www/src 
 
 # Composer
 if [ -f composer.json ] ; then
     composer install --prefer-source --no-ansi --no-interaction --no-progress --optimize-autoloader
 fi
 
-# update script
-if [ -f /bin/update ] ; then
-	/bin/bash -c /bin/update
+# Yarn
+if [ -f yarn.lock ] ; then
+    yarn --frozen-lockfile --non-interactive
 fi
 
-## LOCK
-rm .update.lock
+# End
+rm /var/www/update.lock

@@ -12,7 +12,7 @@ Painless and production-grade docker image for hosting almost any PHP project.
 - Powered by **Nginx**, **PHP7-FPM** on latest **Ubuntu**
 - PHP extensions already installed, including MongoDB driver
 - Allows passing envrionment variables to PHP scripts
-- Node.js 8.x 
+- Node, Yarn and Composer installed
 
 ## Quick Start
 
@@ -46,29 +46,23 @@ Otherwise you can simply mount it under `/var/www/src/public`.
 
 ## Scripts
 
-`entrypoint`
+### `fixperms`
 
-- This is the default entrypoint that will be called on start. If any argument is passed it will simply run that command and exits, otherwise `fixperm`, `entrypoint-www` and `supervisord` will be called respectively.
+This script sets correct ownership for www and log files. For faster startup, fixing `/var/www/src` will be done in background.
 
-`entrypoint-www`
+### logs`
 
-- This script should be only called by `entrypoint`. It ensures `public` directory exists and cleans up `update.lock` file.
+Tails all PHP and Nginx logs.
 
-`fixperm`
+### `run-as-www`
 
-- This script sets currect ownership for src and log files. For faster startup, fixing `src` will be done in background.
+Useful for running commands as `www-data` inside project.
 
-`logs`
+**Example:** `docker exec -it [containerName] run-as-www php artisan help`
 
-- Tails all logs
+### `update`
 
-`run-as-www`
-
-- Useful for running commands as `www-data` user inside project: `docker exec -it [containerName] run-as-www php artisan help`
-
-`update`
-
-- Run `composer install` and `/bin/update` if exists. A lock file `update.lock` prevents this script to be running more than once at a time.
+- Run `composer install` and `yarn install` if derectedd. A lock file `/var/www/update.lock` will be created to prevent running more than once.
 
 ## Supervisord
 

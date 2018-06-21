@@ -1,8 +1,9 @@
 #!/bin/bash
 
+# Ensure files exist
 touch /var/www/logs/nginx-access.log \
       /var/www/logs/nginx-error.log \
       /var/www/logs/supervisord.log
 
-#Tail logs to stdout
+# Tail logs to stdout
 tail -n 100 -f /var/www/logs/*.log
