@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Run CMD
+# Run command if any argument is passed
 if [ ! $# -eq 0 ] ; then
-    cmd $@ 
-    exit
+    $@ 
+    exit $?
 fi
 
 # Fix Permissions
