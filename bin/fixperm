@@ -1,14 +1,9 @@
 #!/bin/bash
 
-echo "Fixing permissions"
-
 # Fix Permissions
-mkdir -vp /var/www/logs /var/www/tmp /var/www/.ssh /var/www/src
-chmod 700 -R /var/www/.ssh 
+mkdir -p /var/www/logs /var/www/tmp /var/www/src
 
-chown www-data:www-data /var/www /var/www/src
-chown www-data:www-data -R \
- /var/www/.ssh /var/www/logs /var/www/tmp /var/www/.composer
+chown www-data:www-data -R /var/www/logs /var/www/tmp /var/www/.composer
 
 # Working on src may take a long time so do it in background
-chown -R :www-data /var/www/src &
+chown -R www-data:www-data /var/www/src &

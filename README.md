@@ -1,49 +1,42 @@
-[![Docker Pulls](https://img.shields.io/docker/pulls/pooya/paas.svg)](https://hub.docker.com/r/pooya/paas)
-[![Docker Repository on Quay](https://quay.io/repository/pooya/paas/status "Docker Repository on Quay")](https://quay.io/repository/pooya/paas)
-[![GitHub stars](https://img.shields.io/github/stars/pi0/paas.svg?style=social&label=Star&?style=flat-square)](https://github.com/pi0/paas)
+[![Docker Pulls](https://img.shields.io/docker/pulls/banian/php.svg)](https://hub.docker.com/r/banian/paas)
+[![Docker Repository on Quay](https://quay.io/repository/banian/php/status "Docker Repository on Quay")](https://quay.io/repository/banian/paas)
+[![GitHub stars](https://img.shields.io/github/stars/banian/php.svg?style=social&label=Star&?style=flat-square)](https://github.com/banian/paas)
 
-# Paas (PHP as a service )
-Painless and automated any PHP Project docker instances hosting and deployment.   
-paas is developed under inspiration of [Laravel Forge](https://forge.laravel.com) Project, which allows you deploy and host your laravel projects wihout any configuraion. paas is Free, Self Hosted and More powerful. ** And can be used for ANY php framework or project **.
-  
-# Features
+# Banian PHP docker image
+Painless and production-grade docker image for hosting almost any PHP project!
+
+## Features
 - Full **Laravel** Support.
-- Production ready And fully dockerized environment for hosting php projects.
+- Production ready and fully dockerized environment for hosting php projects.
 - All Data is independent of container, just delete and create an new one any time you want.
 - Powered by **Nginx**, **PHP7-FPM** on latest **Ubuntu**.
-- **Webhooks** are ready ! Just push and commit your changes and your site is up!
 - PHP **Mongo** extension.
-- **SSH-Keys** are auto-generated for git access.
-- **Nodejs** & **Gulp** installed, just exec `gulp` from container
+- Node.js 8.x installed.
 
-# Webhook
+## Project Structure
 
-Simply set `WEBHOOK_SECRET` environemnt and use injected url `http://project_url/webhook.php?secret=123` to use webhook.   
-if you want to add custom commands, create a `.webhookrc` script in root of your repository.  
+You should mount project under `/var/www/src` if you have a `public/` directory (Most of frameworks, including **Laravel**)
 
-# Branch
+Otherwise you can simply mount it under `/var/www/src/public`.
 
-You can change git branch by using environment variable `GIT_BRANCH`. branch will be changed after next update or container entry-point.
-
-# Project Structure
-
-Your project should have a directory named `public`.
-
-# Running commands
+## Running commands as `www` user
 
 You can use sipmy execute `cmd` command to run commands inside project like :
-` php exec -it [containerName] cmd php artisan help `
 
-# Building images based on paas
+`php exec -it [containerName] cmd php artisan help`
 
 ## Vendor Script
-You can copy your init script to `/bin/vendor` so it will be executed at every update.
+
+You can put your init script to `/bin/vendor` so it will be executed at every update.
 
 ## Supervisord
+
 Supervisord includes are supported. if you have any daemon to run with your image just copy config files to `/etc/supervisor/conf.d`
 
-### Example : Cronjob support
+**Example:** Cronjob support
+
 This example will add Cron Jobs Support to Image. 
+
 `/etc/supervisor/conf.d/cron.conf` :
   
 ```ini
@@ -54,47 +47,27 @@ stderr_logfile  = /var/log/cron.log
 autorestart=true
 ```
 
-# Quick Start
+## Quick Start
 
-## Simple docker-compose.yml
+Host current directory on port `8080`:
+
+`docker run -it --rm `pwd`:/var/www/src/public -p 8080:80 banian/php`
+
+Using **docker-compose**:
 
 ```yaml
-version: '2'
-services:
-  laravel:
-    image: pooya/paas
-    volumes:
-      - ./data/www:/var/www
-    environment:
-      -  VIRTUAL_HOST=my.subdomain.com
-      -  GIT_REPO=https://github.com/some/repo.git
-      -  PASSWORD=www-data_password
-      -  WEBHOOK_SECRET=123
-    restart: always
-    network_mode: "bridge"
-```
+version: '3'
 
-## Alternative docker-compose.yml:  
-You can also create a docker compose file inside your repository and mount project to `/var/www/src`
-   
-docker-compose.yaml: (inside your repo)
-```yaml
-version: '2'
 services:
-  www:
-    image: pooya/paas
+  myapp:
+    image: banian/php
     volumes:
-      - .:/var/www/src
-    env_file: .env
-    network_mode: "bridge"
+      - ./www:/var/www
+    ports:
+      - "8080:80"
     restart: always
 ```
-   
-# Tips
 
-To prevent confilctes and pushing lock files in your dev environment, ignore generated files.
-`.gitingnore`:
-```
-.paas.lock
-public/webhook.php
-```
+## License
+
+MIT

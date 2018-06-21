@@ -1,3 +1,4 @@
+# Default Server
 server {
     # Port that the web server will listen on.
     listen 80 default;
@@ -6,7 +7,7 @@ server {
     server_name _;
 
     # The location of our projects public directory.
-    root            /var/www/src/public;
+    root /var/www/src/public;
 
     # Index	
     index index.php index.html;
@@ -16,15 +17,26 @@ server {
     location ~ \.php$ {
         include snippets/fastcgi-php.conf;
 	    fastcgi_param   HTTPS $fe_https;
-        fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+        fastcgi_pass unix:/run/php/php-fpm.sock;
     }
-
 
     location ~ /\.ht {deny all;}
+}
 
-    #Set header expirations on per-project basis
-    location ~* \.(?:ico|css|js|jpe?g|JPG|png|svg|woff|woff2)$ {
-		expires 365d;
+# Status server
+server {
+    listen 8080;
+
+    location /nginx_status {
+      stub_status on;
+      access_log off;
     }
 
+    location ~ ^/(status|ping)$ {
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_pass unix:/run/php/php-fpm.sock;
+    }
 }
+
+

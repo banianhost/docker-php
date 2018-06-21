@@ -1,32 +1,17 @@
 #!/bin/bash
 
-# Save Environment
-if [ ! -f /WEBHOOK_SECRET ] ; then
-    echo "$WEBHOOK_SECRET" > /WEBHOOK_SECRET
-fi
-
-# Load ENV
-env | sed 's/\([^=]*\)=\(.*\)/\1="\2"/g' > /bin/load_env
-chmod +x /bin/load_env
-
 # Run CMD
 if [ ! $# -eq 0 ] ; then
     cmd $@ 
     exit
 fi
 
-# Start Boot 
-echo "Booting paas"
-
 # Fix Permissions
 fixperm
-
-# Monitor Logs
-logs &
 
 # Start www-data entrypoint and fork
 sudo -E -u www-data -g www-data entrypoint-www 2>&1 &
 
 # Start supervisord
-echo "Starting supervisord"
 /usr/bin/supervisord -c /etc/supervisord.conf 
+

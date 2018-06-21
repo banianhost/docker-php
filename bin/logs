@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "Monitoring logs"
-
-touch /var/www/logs/nginx-access.log /var/www/logs/nginx-error.log /var/www/logs/supervisord.log
+touch /var/www/logs/nginx-access.log \
+      /var/www/logs/nginx-error.log \
+      /var/www/logs/supervisord.log
 
 #Tail logs to stdout
-tail -f /var/www/logs/*.log
+tail -n 100 -f /var/www/logs/*.log

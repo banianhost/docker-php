@@ -1,34 +1,18 @@
 #!/bin/bash
-source load_env 2>null
-[ ! -f /var/www/src ] && mkdir -pv /var/www/src
+
+[ ! -f /var/www/src ] && mkdir -p /var/www/src
+
 cd /var/www/src 
 
-echo "Running update script"
-
 ## LOCK
-if [ -f .paas.lock ] ; then
-	echo "Lock file '.paas.lock' exists, it seems it is already updating ..."
+if [ -f .update.lock ] ; then
+	echo "Lock file '.update.lock' exists, it seems it is already updating ..."
 	exit 1
 fi
-touch .paas.lock
-
-# Do real update
-if ! [ -z $GIT_REPO ] ; then
-if [ -d .git ] ; then
-    echo "Pulling git repo..."
-    git reset --hard
-    git pull
-
-    if ! [ -z $GIT_BRANCH ] ; then
-        git checkout $GIT_BRANCH
-    fi
-
-fi
-fi
+touch .update.lock
 
 # Composer
 if [ -f composer.json ] ; then
-    echo "Installing composer dependencies..."
     composer install --prefer-source --no-ansi --no-interaction --no-progress --optimize-autoloader
 fi
 
@@ -37,10 +21,5 @@ if [ -f /bin/vendor ] ; then
 	/bin/bash -c /bin/vendor
 fi
 
-# .webhookrc file
-if [ -f .webhookrc ] ; then
-	/bin/bash -c /var/www/src/.webhookrc
-fi
-
 ## LOCK
-rm .paas.lock
+rm .update.lock

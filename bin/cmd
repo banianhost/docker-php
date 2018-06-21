@@ -1,6 +1,7 @@
 #!/bin/bash
-source load_env 2>null
-[ ! -f /var/www/src ] && mkdir -pv /var/www/src
+
+[ ! -f /var/www/src ] && mkdir -p /var/www/src
+
 cd /var/www/src
 
 [ $# -eq 0 ] || sudo -E -u www-data -g www-data $@

@@ -1,51 +1,14 @@
 #!/bin/bash
-source load_env 2>null
-[ ! -f /var/www/src ] && mkdir -pv /var/www/src/public
+
+[ ! -f /var/www/src ] && mkdir -p /var/www/src/public
+
 cd /var/www
 
-echo "Initializing www"
-
-# Generate ssh key
-if [ ! -f .ssh/id_rsa.pub ] ; then
- echo -e "\n\n\n" | ssh-keygen -t rsa -N "" -f .ssh/id_rsa -q
-
-echo ----------------------------------------
- echo Public SSH Key is :
- echo ----------------------------------------
- cat .ssh/id_rsa.pub
-echo ----------------------------------------
-
-fi
-
-# Clone git repo
-if ! [ -z $GIT_REPO ] ; then
-    if [ ! -d src/.git ] ;then
-        echo "Cloning git repo from $GIT_REPO"
-        rm -r /tmp/src
-        yes | GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no' git clone --recursive "$GIT_REPO" /tmp/src
-		cp -rv /tmp/src ~
-        rm -r /tmp/src
-   fi
-fi
-
 # Ensure public directory exists
-mkdir -vp src/public
+mkdir -p src/public
 
 # Remove lock file
-if [ -f src/.paas.lock ] ; then
-	rm src/.paas.lock
+if [ -f src/.update.lock ] ; then
+	rm src/.update.lock
 fi
 
-# Execute update
-update
-
-## Ensure Site is up
-pushd src
-if [ -f artisan ] ; then
-    php artisan up
-    echo "Artisan Up!"
-fi
-popd
-
-# Webhook
-ln -fs /bin/webhook.php /var/www/src/public
