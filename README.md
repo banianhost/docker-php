@@ -1,6 +1,5 @@
-[![Docker Pulls](https://img.shields.io/docker/pulls/banian/php.svg)](https://hub.docker.com/r/banian/paas)
-[![Docker Repository on Quay](https://quay.io/repository/banian/php/status "Docker Repository on Quay")](https://quay.io/repository/banian/paas)
-[![GitHub stars](https://img.shields.io/github/stars/banian/php.svg?style=social&label=Star&?style=flat-square)](https://github.com/banian/paas)
+[![Docker Pulls](https://img.shields.io/docker/pulls/banian/php.svg)](https://hub.docker.com/r/banian/php)
+[![GitHub stars](https://img.shields.io/github/stars/banian/php.svg?style=social&label=Star&?style=flat-square)](https://github.com/banian/php)
 
 # Banian PHP docker image
 Painless and production-grade docker image for hosting almost any PHP project!
