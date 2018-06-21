@@ -6,10 +6,6 @@ if [ ! $# -eq 0 ] ; then
     exit $?
 fi
 
-# Ensure directories exist
-mkdir -p /var/www/src/public
-mkdir -p /var/www/logs 
-
 # Fix Permissions
 fixperms
 

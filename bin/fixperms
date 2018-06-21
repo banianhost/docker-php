@@ -1,12 +1,15 @@
 #!/bin/bash
 
-DIRS="/var/www/logs /var/www/tmp /var/www/.composer"
+cd /var/www
+
+DIRS="logs tmp .composer"
 
 # Ensure directories existence
 mkdir -p $DIRS
 
 # Fix permissions
 chown -R www-data:www-data $DIRS
-  
+
 # Working on src may take a long time so do it in background
-chown -R www-data:www-data /var/www/src &
+mkdir -p src/public
+chown -R www-data:www-data src &
