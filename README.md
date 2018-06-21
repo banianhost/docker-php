@@ -1,7 +1,7 @@
 # Banian PHP docker image
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/banian/php.svg)](https://hub.docker.com/r/banian/php)
-[![GitHub stars](https://img.shields.io/github/stars/banian/php.svg?style=social&label=Star&?style=flat-square)](https://github.com/banian/php)
+[![GitHub stars](https://img.shields.io/github/stars/banianhost/php.svg?style=social&label=Star&?style=flat-square)](https://github.com/banian/php)
 
 Painless and production-grade docker image for hosting almost any PHP project.
 
