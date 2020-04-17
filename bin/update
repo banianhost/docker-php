@@ -41,6 +41,7 @@ fi
 # Yarn
 if [ -f yarn.lock ] ; then
     run-as-www yarn --frozen-lockfile --non-interactive
+    run-as-www yarn build || true
 fi
 
 # Remove lock file
