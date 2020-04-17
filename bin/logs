@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Ensure files exist
 touch /var/www/logs/nginx-access.log \

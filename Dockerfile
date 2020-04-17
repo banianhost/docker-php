@@ -1,7 +1,6 @@
 FROM ubuntu
 
-ENV HOME=/var/www \
-    TERM=xterm \
+ENV TERM=xterm \
     SHELL=bash \
     DEBIAN_FRONTEND=noninteractive \
     NODE_ENV=production \
@@ -19,8 +18,7 @@ RUN apt-get update && \
     curl -sL https://deb.nodesource.com/setup_${NODE_VERSION} | sudo -E bash && \
     apt-get install -y nodejs && \
     curl -o- -L https://yarnpkg.com/install.sh | bash -s -- && \
-    ln -sfv /root/.yarn/bin/* /bin && \
-    ln -sfv /root/.yarn/bin/node-gyp-bin/node-gyp /bin/node-gyp && \
+    ln -sfv /root/.yarn/bin/yarn /bin && \
     rm -rf /var/cache/apt && rm -rf /var/lib/apt && \
     curl -sS https://getcomposer.org/installer | \
     php -- --install-dir=/usr/bin --filename=composer && \
@@ -28,6 +26,7 @@ RUN apt-get update && \
     mkdir -p /var/www && \
     chown -R www-data:www-data /var/www /root
 
+ENV HOME=/var/www
 EXPOSE 80
 ENTRYPOINT ["entrypoint"]
 

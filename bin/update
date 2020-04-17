@@ -1,14 +1,21 @@
 #!/bin/bash
 set -e
 
+LOCK_FILE=/update.lock
+
 # Check if lock file exists
-if [ -f /var/www/update.lock ] ; then
-	echo "Lock file 'update.lock' exists, it seems it is already updating ..."
-	exit 1
+if [ -f $LOCK_FILE ] ; then
+    # Check if really running
+    PID=`cat $LOCK_FILE`
+    if [ kill -s 0 $PID ] ; then
+        echo "$LOCK_FILE' with PID=$PID exists and running..."
+        exit 1
+    fi
+    echo "Warn: Cleaning stale lock file..."
 fi
 
-# Create lock file
-touch /var/www/update.lock
+# Update lockfile with current PID
+echo $$ > $LOCK_FILE
 
 # Fix
 fix
@@ -21,10 +28,10 @@ if [ ! -z $GIT_REPO ]; then
   if [ -d .git ] ; then
     run-as-www git pull
   else
+    rmdir public
     run-as-www git clone $GIT_REPO .
   fi
 fi
-
 
 # Composer
 if [ -f composer.json ] ; then
@@ -37,4 +44,4 @@ if [ -f yarn.lock ] ; then
 fi
 
 # Remove lock file
-rm /var/www/update.lock
+rm /update.lock
