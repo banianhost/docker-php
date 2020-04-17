@@ -38,10 +38,28 @@ if [ -f composer.json ] ; then
     run-as-www composer install --no-dev --no-interaction --no-progress --optimize-autoloader
 fi
 
-# Yarn
+# .env
+if [ -f .env.example ] && [ ! -f .env ]; then
+    run-as-www cp -v .env.example .env
+fi
+
+# Laravel
+if [ -f artisan ] ; then
+    source .env
+    if [ -z $APP_KEY ]; then
+        run-as-www  php artisan key:generate
+    fi
+    run-as-www php artisan migrate || true
+fi
+
+# Yarn (do in background)
 if [ -f yarn.lock ] ; then
-    run-as-www yarn --frozen-lockfile --non-interactive
-    run-as-www yarn build || true
+    yarn-build &
+fi
+
+# User script
+if [ -x update ] ; then
+ run-as-www ./update
 fi
 
 # Remove lock file
