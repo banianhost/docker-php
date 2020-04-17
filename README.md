@@ -13,6 +13,7 @@ Painless and production-grade docker image for hosting almost any PHP project.
 - PHP extensions already installed, including MongoDB driver
 - Allows passing envrionment variables to PHP scripts
 - Node, Yarn and Composer installed
+- Auto git clone / pull
 
 ## Quick Start
 
@@ -43,9 +44,13 @@ You should mount project under `/var/www/src` if you have a `public/` directory 
 
 All logs are stored under `/var/www/logs`.
 
+## `GIT_REPO`
+
+Simply set this environment variable and it clones/pulls repo!
+
 ## Commands
 
-### `fixperms`
+### `fix`
 
 This script sets correct ownership for www and log files. For faster startup, fixing `/var/www/src` will be done in background.
 
@@ -70,7 +75,7 @@ If you have any daemon to run with your project just add config files into `/etc
 **Example:** Cronjob support
 
 `/etc/supervisor/conf.d/cron.conf` :
-  
+
 ```ini
 [program:cron]
 command = /usr/sbin/cron -f -L 15

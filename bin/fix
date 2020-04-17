@@ -1,8 +1,9 @@
 #!/bin/bash
+set -e
 
 cd /var/www
 
-DIRS="logs tmp .composer"
+DIRS="logs tmp .composer src"
 
 # Ensure directories existence
 mkdir -p $DIRS
@@ -12,4 +13,4 @@ chown -R www-data:www-data $DIRS
 
 # Working on src may take a long time so do it in background
 mkdir -p src/public
-chown -R www-data:www-data src &
+chown -R www-data:www-data src

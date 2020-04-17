@@ -1,14 +1,15 @@
 #!/bin/bash
+set -e
 
 # Run command if any argument is passed
 if [ ! $# -eq 0 ] ; then
-    $@ 
+    $@
     exit $?
 fi
 
-# Fix Permissions
-fixperms
+# Update
+update
 
 # Start supervisord
-/usr/bin/supervisord -c /etc/supervisord.conf 
+/usr/bin/supervisord -c /etc/supervisord.conf
 

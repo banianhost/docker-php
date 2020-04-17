@@ -1,14 +1,30 @@
 #!/bin/bash
+set -e
 
-# Start
+# Check if lock file exists
 if [ -f /var/www/update.lock ] ; then
 	echo "Lock file 'update.lock' exists, it seems it is already updating ..."
 	exit 1
 fi
 
+# Create lock file
 touch /var/www/update.lock
 
-cd /var/www/src 
+# Fix
+fix
+
+# Go to src
+cd /var/www/src
+
+# Git repo
+if [ ! -z $GIT_REPO ]; then
+  if [ -d .git ] ; then
+    run-as-www git pull
+  else
+    run-as-www git clone $GIT_REPO .
+  fi
+fi
+
 
 # Composer
 if [ -f composer.json ] ; then
@@ -20,5 +36,5 @@ if [ -f yarn.lock ] ; then
     run-as-www yarn --frozen-lockfile --non-interactive
 fi
 
-# End
+# Remove lock file
 rm /var/www/update.lock
