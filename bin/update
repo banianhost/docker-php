@@ -58,7 +58,7 @@ if [ -f yarn.lock ] ; then
 fi
 
 # User script
-if [ -x update ] ; then
+if [ -x ./update ] ; then
  run-as-www ./update
 fi
 
