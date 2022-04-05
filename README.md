@@ -1,7 +1,5 @@
 # Banian PHP docker image
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/banian/php.svg)](https://hub.docker.com/r/banian/php)
-[![GitHub stars](https://img.shields.io/github/stars/banianhost/php.svg?style=social&label=Star&?style=flat-square)](https://github.com/banian/php)
 
 Painless and production-grade docker image for hosting almost any PHP project.
 
@@ -9,7 +7,7 @@ Painless and production-grade docker image for hosting almost any PHP project.
 
 - **Laravel** Support
 - Production ready and stable for any PHP project
-- Powered by **Nginx**, **PHP7-FPM** on latest **Ubuntu**
+- Powered by **Nginx**, **PHP8-FPM** on latest **Ubuntu**
 - PHP extensions already installed, including MongoDB driver
 - Allows passing envrionment variables to PHP scripts
 - Node, Yarn and Composer installed
