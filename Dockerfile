@@ -12,7 +12,7 @@ RUN apt-get update && \
     apt-get install -y \
     bash supervisor nginx git curl sudo zip unzip xz-utils libxrender1 gnupg \
     php php-apcu php-bz2 php-cli php-curl php-fpm php-gd php-geoip \
-    php-gettext php-gmp php-imagick php-imap php-json php-mbstring php-zip \
+    php-php-gettext php-gmp php-imagick php-imap php-json php-mbstring php-zip \
     php-memcached php-mongodb php-mysql php-pear php-redis php-xml php-intl php-soap \
     php-sqlite3 php-dompdf php-fpdf php-ssh2 php-bcmath && \
     curl -sL https://deb.nodesource.com/setup_${NODE_VERSION} | sudo -E bash && \
