@@ -1,21 +1,24 @@
-FROM ubuntu:21.10
+FROM ubuntu:22.04
 
 ENV TERM=xterm \
     SHELL=bash \
     DEBIAN_FRONTEND=noninteractive \
     NODE_ENV=production \
-    PHP_VERSION=8.0 \
-    NODE_VERSION=12.x
+    PHP_VERSION=8.1 \
+    NODE_VERSION=19.x
 
+#install php
 RUN apt-get update && \
     apt-get dist-upgrade -y && \
     apt-get install -y \
     bash supervisor nginx git curl sudo zip unzip xz-utils libxrender1 gnupg \
-    php php-apcu php-bz2 php-cli php-curl php-fpm php-gd php-geoip \
+    php php-apcu php-bz2 php-cli php-curl php-fpm php-gd \
     php-php-gettext php-gmp php-imagick php-imap php-json php-mbstring php-zip \
     php-memcached php-mongodb php-mysql php-pear php-redis php-xml php-intl php-soap \
-    php-sqlite3 php-dompdf php-fpdf php-ssh2 php-bcmath && \
-    curl -sL https://deb.nodesource.com/setup_${NODE_VERSION} | sudo -E bash && \
+    php-sqlite3 php-dompdf php-fpdf php-bcmath php-opcache
+
+#install node
+RUN curl -sL https://deb.nodesource.com/setup_${NODE_VERSION} | sudo -E bash && \
     apt-get install -y nodejs && \
     curl -o- -L https://yarnpkg.com/install.sh | bash -s -- && \
     ln -sfv /root/.yarn/bin/yarn /bin && \
@@ -39,4 +42,3 @@ RUN ln -vs /var/www/ /home/www-data && \
 
 COPY bin /bin
 COPY conf /conf
-
